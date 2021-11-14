@@ -1,0 +1,11 @@
+USE ota;
+
+DROP PROCEDURE IF EXISTS clear_log;
+
+DELIMITER //
+CREATE PROCEDURE clear_log ()
+BEGIN
+   TRUNCATE TABLE log
+;
+END //
+DELIMITER ;

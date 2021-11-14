@@ -1,0 +1,10 @@
+USE ota;
+
+DELIMITER //
+
+CREATE PROCEDURE GetCandle()
+   BEGIN
+   SELECT * FROM Tick;
+   END //
+
+DELIMITER ;
