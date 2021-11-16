@@ -790,8 +790,39 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../app/ \
-						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/ \
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../README.md \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/admin_manager/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/create_trading_db/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/forex_persistence_manager/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/oanda_manager/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/oanda_manager_simulation/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/oanda_persistence_manager/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/offcenter_trading_manager/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/persist_oanda_candle_data/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/persist_oanda_forex_data_to_csv/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/process_candlestick_hierarchy/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/signal_current_candle/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../app/signal_current_candle_trigger/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/common/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/common/include/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/data_types/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/data_types/include/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/common/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/common/include/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/common/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/common/include/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/data_types_amqp/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/data_types_amqp/include/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/data_types_json/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/data_types_json/include/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/data_types_soci/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/data_types_soci/include/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/oanda_persistence_client/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/oanda_persistence_client/include/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/trading/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/trading/include/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/trading_db/src/ \
+						 @CMAKE_CURRENT_SOURCE_DIR@/../lib/trading_db/include/ \
 						 @CMAKE_CURRENT_SOURCE_DIR@/../test/
 
 # This tag can be used to specify the character encoding of the source files
@@ -984,7 +1015,7 @@ FILTER_SOURCE_PATTERNS =
 # (index.html). This can be useful if you have a project on for instance GitHub
 # and want to reuse the introduction page also for the doxygen output.
 
-USE_MDFILE_AS_MAINPAGE =
+USE_MDFILE_AS_MAINPAGE = @CMAKE_CURRENT_SOURCE_DIR@/../README.md
 
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
