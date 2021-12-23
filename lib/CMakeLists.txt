@@ -1,10 +1,5 @@
 
 # Global Libraries
-find_package(Boost
-	1.74
-	COMPONENTS program_options atomic thread system regex filesystem random chrono serialization 
-)
-# websocketpp  date-time
 
 add_subdirectory(data_types)
 add_subdirectory(data_types_amqp)
