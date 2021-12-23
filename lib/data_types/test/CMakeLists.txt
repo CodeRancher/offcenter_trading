@@ -33,13 +33,19 @@ add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)
 add_executable(offcenter_trading_data_types_tests
 	${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/date_time_test.cpp
+	${CMAKE_CURRENT_LIST_DIR}/src/candlestick_test.cpp
+	${CMAKE_CURRENT_LIST_DIR}/src/generate_sine_candlesticks_test.cpp
 )
 
 target_link_libraries(offcenter_trading_data_types_tests
 	offcenter_trading_data_types
+	Boost::headers
 	GTest::gtest
 	${EASYLOGGINGPP_LIBRARY}
+	${MPFR_LIBRARIES}
+	${GMP_LIBRARIES}
 )
+message(STATUS "MPFR_LIBRARIES       ${MPFR_LIBRARIES}")
 
 target_include_directories(offcenter_trading_data_types_tests
 	PUBLIC
