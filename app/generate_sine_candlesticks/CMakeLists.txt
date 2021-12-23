@@ -15,6 +15,11 @@ add_compile_definitions(ELPP_THREAD_SAFE)
 add_compile_definitions(ELPP_FRESH_LOG_FILE)
 add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)
 
+#find_package(Boost
+#	1.74
+#	COMPONENTS program_options atomic thread system regex filesystem random chrono serialization log multiprecision
+#)
+
 set(AMQP_LIBRARIES
 	offcenter_common_framework
 	offcenter_common
@@ -41,16 +46,22 @@ set(AMQP_LIBRARIES
 
 ###############################################################################
 # Example Consumer
-add_executable (offcenter_signal_current_candle_trigger
-    ${CMAKE_CURRENT_LIST_DIR}/src/signal_current_candle_trigger_app.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/SignalCurrentCandleTriggerApp.cpp
+add_executable (offcenter_generate_sine_candlesticks.sin
+    ${CMAKE_CURRENT_LIST_DIR}/src/generate_sine_candlesticks_app.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/GenerateSineCandlesticksApp.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/GenerateSineCandlesticksApps.cpp
 )
 
-target_link_libraries(offcenter_signal_current_candle_trigger
+target_compile_definitions(offcenter_generate_sine_candlesticks.sin
+	PRIVATE
+		APP_TYPE=Sine
+)
+
+target_link_libraries(offcenter_generate_sine_candlesticks.sin
 	${AMQP_LIBRARIES}
 )
 
-target_include_directories(offcenter_signal_current_candle_trigger
+target_include_directories(offcenter_generate_sine_candlesticks.sin
 	BEFORE PUBLIC
 		${CMAKE_CURRENT_LIST_DIR}/include
 	SYSTEM

@@ -9,12 +9,6 @@ find_package(Threads REQUIRED)
 
 cmake_policy(SET CMP0074 NEW)
 
-find_package(Boost
-	1.74
-	COMPONENTS program_options atomic thread system regex filesystem random chrono serialization 
-)
-# websocketpp  date-time
-
 add_compile_definitions(ELPP_THREAD_SAFE)
 add_compile_definitions(ELPP_FRESH_LOG_FILE)
 add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)

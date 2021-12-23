@@ -14,12 +14,6 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 include(FetchContent)
 include(ExternalProject)
 
-find_package(Boost
-	1.74
-	COMPONENTS atomic thread system regex filesystem random chrono serialization 
-)
-# websocketpp  date-time
-
 # FetchContent_Declare(
 # 	nlohmann_json
 #     GIT_REPOSITORY	https://github.com/nlohmann/json.git

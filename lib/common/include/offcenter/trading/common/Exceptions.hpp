@@ -60,6 +60,17 @@ public:
 	DuplicateRecord(const std::runtime_error& other) noexcept: TradingRuntimeException(other) {}
 };
 
+/**
+ * Invalid initialization of data element
+ */
+class InvalidInitialization: public TradingRuntimeException
+{
+public:
+	explicit InvalidInitialization(const std::string& what_arg): TradingRuntimeException(what_arg) {}
+	explicit InvalidInitialization(const char* what_arg): TradingRuntimeException(what_arg) {}
+	InvalidInitialization(const std::runtime_error& other) noexcept: TradingRuntimeException(other) {}
+};
+
 } /* namespace common */
 } /* namespace trading */
 } /* namespace offcenter */

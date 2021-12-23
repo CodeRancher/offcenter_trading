@@ -13,11 +13,6 @@ find_package(cpprestsdk REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 
-find_package(Boost
-	1.74
-	COMPONENTS program_options atomic thread system regex filesystem random chrono serialization 
-)
-
 add_compile_definitions(ELPP_THREAD_SAFE)
 add_compile_definitions(ELPP_FRESH_LOG_FILE)
 add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)
