@@ -1,7 +1,7 @@
 /**
  * Copyright 2021 Scott Brauer
  *
- * Licensed under the Apache License, Version 2.0 (the );
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -19,6 +19,7 @@
  * @author Scott Brauer
  * @date   05-10-2021
  */
+
 #ifndef OFFCENTER_TRADING_AMQP_BASEPRODUCER_HPP_
 #define OFFCENTER_TRADING_AMQP_BASEPRODUCER_HPP_
 
