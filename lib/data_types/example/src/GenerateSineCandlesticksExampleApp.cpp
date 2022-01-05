@@ -46,10 +46,10 @@ GenerateSineCandlesticksExampleApp::GenerateSineCandlesticksExampleApp():
 		m_clearColor(ImVec4(0.45f, 0.55f, 0.60f, 1.00f)),
 		m_stepsPerDuration(0.01),
 		m_sineData{
-			{{ 5.0, 0.0, 20.0},  {60,  1, 240},  {0.0, 0.0, 20.0},  {0, 0, 480}},
-			{{10.0, 0.0, 40.0},  {90,  1, 240},  {0.0, 0.0, 40.0},  {0, 0, 480}},
-			{{20.0, 0.0, 80.0},  {120, 1, 480},  {0.0, 0.0, 80.0},  {0, 0, 4800}},
-			{{40.0, 0.0, 160.0}, {240, 1, 1024}, {0.0, 0.0, 160.0}, {0, 0, 10240}}
+			{{ 5.0, 0.0, 20.0},  {60,  30, 240},  {0.0, 0.0, 20.0},  {0, 0, 60}},
+			{{10.0, 0.0, 40.0},  {90,  30, 240},  {0.0, 0.0, 40.0},  {0, 0, 90}},
+			{{20.0, 0.0, 80.0},  {120, 30, 480},  {0.0, 0.0, 80.0},  {0, 0, 120}},
+			{{40.0, 0.0, 160.0}, {240, 30, 1024}, {0.0, 0.0, 160.0}, {0, 0, 240}}
 		},
 		m_graphToSineScale(0.01),
 		m_sineWaveCollection(
@@ -57,10 +57,10 @@ GenerateSineCandlesticksExampleApp::GenerateSineCandlesticksExampleApp():
 				offcenter::common::make_UTCDateTimeFromISO8601("2000-01-01T00:00:00.000000000Z"),
 				std::chrono::seconds(5),
 				{
-						offcenter::trading::common::SineWave<FloatType>(m_sineData[0].amplitude.value, std::chrono::seconds(m_sineData[0].wavelength.value), m_sineData[0].amplitudeShift.value, std::chrono::milliseconds(m_sineData[0].wavelengthShift.value)),
-						offcenter::trading::common::SineWave<FloatType>(m_sineData[1].amplitude.value, std::chrono::seconds(m_sineData[1].wavelength.value), m_sineData[1].amplitudeShift.value, std::chrono::milliseconds(m_sineData[1].wavelengthShift.value)),
-						offcenter::trading::common::SineWave<FloatType>(m_sineData[2].amplitude.value, std::chrono::seconds(m_sineData[2].wavelength.value), m_sineData[2].amplitudeShift.value, std::chrono::milliseconds(m_sineData[2].wavelengthShift.value)),
-						offcenter::trading::common::SineWave<FloatType>(m_sineData[3].amplitude.value, std::chrono::seconds(m_sineData[3].wavelength.value), m_sineData[3].amplitudeShift.value, std::chrono::milliseconds(m_sineData[3].wavelengthShift.value))
+						offcenter::trading::common::SineWave<FloatType>(m_sineData[0].amplitude.value, m_sineData[0].waveLengthInSeconds(), m_sineData[0].amplitudeShift.value, m_sineData[0].wavelengthShiftInMilliseconds()),
+						offcenter::trading::common::SineWave<FloatType>(m_sineData[1].amplitude.value, m_sineData[1].waveLengthInSeconds(), m_sineData[1].amplitudeShift.value, m_sineData[1].wavelengthShiftInMilliseconds()),
+						offcenter::trading::common::SineWave<FloatType>(m_sineData[2].amplitude.value, m_sineData[2].waveLengthInSeconds(), m_sineData[2].amplitudeShift.value, m_sineData[2].wavelengthShiftInMilliseconds()),
+						offcenter::trading::common::SineWave<FloatType>(m_sineData[3].amplitude.value, m_sineData[3].waveLengthInSeconds(), m_sineData[3].amplitudeShift.value, m_sineData[3].wavelengthShiftInMilliseconds())
 				}
 		),
 		m_showWave(false),
@@ -91,6 +91,12 @@ void GenerateSineCandlesticksExampleApp::onExecute()
 }
 void GenerateSineCandlesticksExampleApp::onExecute(GLFWwindow* window)
 {
+	ImVec4 sine0Color(0.5f, 0.2f, 0.9f, 0.8f);
+	ImVec4 sine1Color(0.2f, 0.85f, 0.85f, 0.5f);
+	ImVec4 sine2Color(0.2f, 0.85f, 0.2f, 0.75f);
+	ImVec4 sine3Color(0.9f, 0.5f, 0.2f, 0.9f);
+	std::vector<ImVec4> sineColors{sine0Color, sine1Color, sine2Color, sine3Color};
+
 	int w, h;
 	glfwGetWindowSize(window, &w, &h);
 	ImGui::SetNextWindowSize(ImVec2(w, h));
@@ -105,57 +111,109 @@ void GenerateSineCandlesticksExampleApp::onExecute(GLFWwindow* window)
 	{
 
 		// Table headers
-		ImGui::TableSetupColumn("Sine1", ImGuiTableColumnFlags_WidthStretch);
+		ImGui::TableSetupColumn("Sine0", ImGuiTableColumnFlags_WidthStretch);
 
 		if (maxIndex >= 1) {
-			ImGui::TableSetupColumn("Sine2", ImGuiTableColumnFlags_WidthStretch);
+			ImGui::TableSetupColumn("Sine1", ImGuiTableColumnFlags_WidthStretch);
 		}
 
 		if (maxIndex >= 2) {
-			ImGui::TableSetupColumn("Sine3", ImGuiTableColumnFlags_WidthStretch);
+			ImGui::TableSetupColumn("Sine2", ImGuiTableColumnFlags_WidthStretch);
 		}
 
 		if (maxIndex >= 3) {
-			ImGui::TableSetupColumn("Sine4", ImGuiTableColumnFlags_WidthStretch);
+			ImGui::TableSetupColumn("Sine3", ImGuiTableColumnFlags_WidthStretch);
 		}
 
 		ImGui::TableHeadersRow();
 
+		displayColumn(maxIndex, sineColors, "Amplitude",
+				[this](const std::string& text, int index) {
+					if (ImGui::SliderFloat(text.c_str(), &m_sineData.at(index).amplitude.value, m_sineData.at(index).amplitude.min, m_sineData.at(index).amplitude.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+						m_sineWaveCollection.setAmplitude(index, m_sineData.at(index).amplitude.value);
+					}
+				}
+		);
+		/*
 		ImGui::TableNextRow();
 		for (int index = 0; index < maxIndex; index++) {
 			ImGui::TableSetColumnIndex(index);
-			std::string amp("Amplitude(" + std::to_string(index) + ")");
-			if (ImGui::SliderFloat(amp.c_str(), &m_sineData.at(index).amplitude.value, m_sineData.at(index).amplitude.min, m_sineData.at(index).amplitude.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+			ImGui::PushStyleColor(ImGuiCol_Text, sineColors.at(index));
+			std::string text("Amplitude(" + std::to_string(index) + ")");
+			if (ImGui::SliderFloat(text.c_str(), &m_sineData.at(index).amplitude.value, m_sineData.at(index).amplitude.min, m_sineData.at(index).amplitude.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
 				m_sineWaveCollection.setAmplitude(index, m_sineData.at(index).amplitude.value);
 			}
+			ImGui::PopStyleColor();
 		}
+		*/
 
+		displayColumn(maxIndex, sineColors, "Wavelength",
+				[this](const std::string& text, int index) {
+					if (ImGui::SliderInt(text.c_str(), &m_sineData.at(index).wavelength.value, m_sineData.at(index).wavelength.min, m_sineData.at(index).wavelength.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+						m_sineWaveCollection.setWavelength(index, std::chrono::seconds(m_sineData.at(index).wavelength.value));
+						m_sineData.at(index).wavelengthShift.max = m_sineData.at(index).wavelength.value;
+						m_sineData.at(index).wavelengthShift.value = std::min(m_sineData.at(index).wavelengthShift.max, m_sineData.at(index).wavelengthShift.value);
+					}
+				}
+		);
+		/*
 		ImGui::TableNextRow();
 		for (int index = 0; index < maxIndex; index++) {
 			ImGui::TableSetColumnIndex(index);
-			std::string freq("Wavelength(" + std::to_string(index) + ")");
-			if (ImGui::SliderInt(freq.c_str(), &m_sineData.at(index).wavelength.value, m_sineData.at(index).wavelength.min, m_sineData.at(index).wavelength.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+			std::string text("Wavelength(" + std::to_string(index) + ")");
+			if (ImGui::SliderInt(text.c_str(), &m_sineData.at(index).wavelength.value, m_sineData.at(index).wavelength.min, m_sineData.at(index).wavelength.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
 				m_sineWaveCollection.setWavelength(index, std::chrono::seconds(m_sineData.at(index).wavelength.value));
+				m_sineData.at(index).wavelengthShift.max = m_sineData.at(index).wavelength.value;
+				m_sineData.at(index).wavelengthShift.value = std::min(m_sineData.at(index).wavelengthShift.max, m_sineData.at(index).wavelengthShift.value);
 			}
 		}
+		*/
 
+		displayColumn(maxIndex, sineColors, "Amplitude Shift",
+				[this](const std::string& text, int index) {
+					if (ImGui::SliderFloat(text.c_str(), &m_sineData.at(index).amplitudeShift.value, m_sineData.at(index).amplitudeShift.min, m_sineData.at(index).amplitudeShift.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+						m_sineWaveCollection.setAmplitudeShift(index, m_sineData.at(index).amplitudeShift.value);
+					}
+				}
+		);
+		/*
 		ImGui::TableNextRow();
 		for (int index = 0; index < maxIndex; index++) {
 			ImGui::TableSetColumnIndex(index);
-			std::string ampS("Amplitude Shift(" + std::to_string(index) + ")");
-			if (ImGui::SliderFloat(ampS.c_str(), &m_sineData.at(index).amplitudeShift.value, m_sineData.at(index).amplitudeShift.min, m_sineData.at(index).amplitudeShift.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+			std::string text("Amplitude Shift(" + std::to_string(index) + ")");
+			if (ImGui::SliderFloat(text.c_str(), &m_sineData.at(index).amplitudeShift.value, m_sineData.at(index).amplitudeShift.min, m_sineData.at(index).amplitudeShift.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
 				m_sineWaveCollection.setAmplitudeShift(index, m_sineData.at(index).amplitudeShift.value);
 			}
 		}
+		*/
+
+		displayColumn(maxIndex, sineColors, "Wavelength Shift",
+				[this](const std::string& text, int index) {
+					if (ImGui::SliderInt(text.c_str(), &m_sineData.at(index).wavelengthShift.value, m_sineData.at(index).wavelengthShift.min, m_sineData.at(index).wavelengthShift.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+						m_sineWaveCollection.setWavelengthShift(index, std::chrono::seconds(m_sineData.at(index).wavelengthShift.value));
+					}
+				}
+		);
+		/*
+		ImGui::TableNextRow();
+		for (int index = 0; index < maxIndex; index++) {
+			ImGui::TableSetColumnIndex(index);
+			std::string text("Wavelength Shift(" + std::to_string(index) + ")");
+			if (ImGui::SliderInt(text.c_str(), &m_sineData.at(index).wavelengthShift.value, m_sineData.at(index).wavelengthShift.min, m_sineData.at(index).wavelengthShift.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
+				m_sineWaveCollection.setWavelengthShift(index, std::chrono::seconds(m_sineData.at(index).wavelengthShift.value));
+			}
+		}
+		*/
 
 		ImGui::TableNextRow();
 		for (int index = 0; index < maxIndex; index++) {
 			ImGui::TableSetColumnIndex(index);
-			std::string freqS("Wavelength Shift(" + std::to_string(index) + ")");
-			if (ImGui::SliderInt(freqS.c_str(), &m_sineData.at(index).wavelengthShift.value, m_sineData.at(index).wavelengthShift.min, m_sineData.at(index).wavelengthShift.max, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
-				m_sineWaveCollection.setWavelengthShift(index, std::chrono::milliseconds(m_sineData.at(index).wavelengthShift.value));
-			}
+			ImGui::PushStyleColor(ImGuiCol_Text, sineColors.at(index));
+			std::string text("Show Wave(" + std::to_string(index) + ")");
+			ImGui::Checkbox(text.c_str(), &m_sineData.at(index).showSineWave);
+			ImGui::PopStyleColor();
 		}
+
 		ImGui::EndTable();
 	}
 
@@ -186,7 +244,7 @@ void GenerateSineCandlesticksExampleApp::onExecute(GLFWwindow* window)
 		//CandlesticksType::CandlestickDuration stepDuration(m_candlesticks.durationInSeconds());
 		//offcenter::common::UTCDateTime endTime = m_candlesticks.startTime() + CandlesticksType::CandlestickDuration(m_candlesticks.durationInSeconds()* 1000);
 		// Candlesticks
-		if (m_showCandles && ImPlot::BeginItem("Item")) {
+		if (m_showCandles && ImPlot::BeginItem("Candlesticks")) {
 			ImPlot::GetCurrentItem()->Color = ImGui::GetColorU32(bullCol);
 			std::chrono::milliseconds offset = std::chrono::duration_cast<std::chrono::milliseconds>(m_sineWaveCollection.duration() * 0.40);
 
@@ -222,53 +280,17 @@ void GenerateSineCandlesticksExampleApp::onExecute(GLFWwindow* window)
 			);
 		}
 
+		initDisplaySineWave<0>("Sine0", sineColors.at(0), 1000);
+		initDisplaySineWave<1>("Sine1", sineColors.at(1), 1000);
+		initDisplaySineWave<2>("Sine2", sineColors.at(2), 1000);
+		initDisplaySineWave<3>("Sine3", sineColors.at(3), 1000);
+
 		// End of plot
 		ImPlot::EndPlot();
 	}
 
-//
-//	static float ratios[] = {2,1};
-//	if (ImPlot::BeginSubplots("##Stocks", 2, 1, ImVec2(-1,-1), ImPlotSubplotFlags_LinkCols, ratios)) {
-//		if (ImPlot::BeginPlot("##OHLCPlot")) {
-//			/*
-//			ImPlot::SetupAxes(0, 0, ImPlotAxisFlags_Time | ImPlotAxisFlags_NoTickLabels, ImPlotAxisFlags_AutoFit | ImPlotAxisFlags_RangeFit | ImPlotAxisFlags_Opposite);
-//			//ImPlot::SetupAxisLimits(ImAxis_X1, data.time[0], data.time.back());
-//			ImPlot::SetupAxisFormat(ImAxis_Y1, "$%.0f");
-//			//TickerTooltip(data, true);
-//			//ImPlot::SetNextFillStyle(ImVec4(0.5,0.5,1,1),0.25f);
-//			//ImPlot::PlotShaded("BB", data.time.data(), data.bollinger_top.data(), data.bollinger_bot.data(), data.size());
-//			//ImPlot::SetNextLineStyle(ImVec4(0.5,0.5,1,1));
-//			//ImPlot::PlotLine("BB",data.time.data(),data.bollinger_mid.data(),data.size());
-//
-//			PlotOHLC("OHLC", data, bull_col, bear_col);
-//			ImPlot::SetNextLineStyle(ImVec4(1,1,1,1));
-//			ImPlot::PlotLine("Close",data.time.data(),data.close.data(),data.size());
-//			ImPlotRect bnds = ImPlot::GetPlotLimits();
-//			int close_idx = BinarySearch(data.time.data(), 0, data.size() - 1, ImPlot::RoundTime(ImPlotTime::FromDouble(bnds.X.Max), ImPlotTimeUnit_Day).ToDouble());
-//			if (close_idx == -1)
-//				close_idx = data.time.size()-1;
-//			double close_val = data.close[close_idx];
-//			ImPlot::TagY(close_val, data.open[close_idx] < data.close[close_idx] ? bull_col : bear_col);
-//			*/
-//			ImPlot::EndPlot();
-//		}
-//		/*
-//		if (ImPlot::BeginPlot("##VolumePlot")) {
-//			ImPlot::SetupAxes(0,0,ImPlotAxisFlags_Time,ImPlotAxisFlags_AutoFit|ImPlotAxisFlags_RangeFit|ImPlotAxisFlags_Opposite);
-//			ImPlot::SetupAxisLimits(ImAxis_X1, data.time[0], data.time.back());
-//			ImPlot::SetupAxisFormat(ImAxis_Y1, VolumeFormatter);
-//			TickerTooltip(data, true);
-//			ImPlot::SetNextFillStyle(ImVec4(1.f,0.75f,0.25f,1));
-//			ImPlot::PlotBars("Volume",data.time.data(),data.volume.data(),data.size(),60*60*24*0.5);
-//			ImPlot::EndPlot();
-//		}
-//		*/
-//		ImPlot::EndSubplots();
-//    }
-
 	ImGui::End();
 }
-
 
 void GenerateSineCandlesticksExampleApp::onTearDown()
 {
@@ -297,6 +319,12 @@ void GenerateSineCandlesticksExampleApp::genSineEditColumn(int sineIndex, SineDa
 	ImGui::TableNextRow();
 	if (ImGui::SliderFloat("Frequency Shift", &sinData.frequencyShift, sinData.amplitudeShiftMin, sinData.amplitudeShiftMax, "%.3f")) { m_sines.sine(sineIndex).setFrequencyShift(sinData.frequencyShift); }
 	*/
+}
+
+ImPlotPoint GenerateSineCandlesticksExampleApp::displaySineWave(void* data, int idx, int waveNum) {
+	const offcenter::trading::common::OHLC<FloatType>& ohlc = sineWaveCollection().ohlc(idx);
+	const offcenter::trading::common::OHLC<FloatType>& ohlcFirst = sineWaveCollection().ohlc(0);
+	return ImPlotPoint(offcenter::common::UTCDateTimeSecondsFromEpoch(ohlc.time), sineWaveCollection().sineWave(waveNum).y(ohlc.time - ohlcFirst.time));
 }
 
 /*

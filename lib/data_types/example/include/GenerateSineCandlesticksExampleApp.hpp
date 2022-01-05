@@ -46,6 +46,10 @@ struct SineData {
 	IntData wavelength;
 	FloatData amplitudeShift;
 	IntData wavelengthShift;
+	bool showSineWave;
+
+	std::chrono::seconds waveLengthInSeconds() { return std::chrono::seconds(wavelength.value); }
+	std::chrono::milliseconds wavelengthShiftInMilliseconds() { return std::chrono::milliseconds(wavelengthShift.value); }
 };
 
 /**
@@ -77,6 +81,34 @@ public:
 
 private:
     void genSineEditColumn(int sineIndex, SineData& sinData);
+    ImPlotPoint displaySineWave(void* data, int idx, int waveNum);
+
+    template<int index>
+    void initDisplaySineWave(const std::string label, const ImVec4& color, int indexCount) {
+		if (m_sineData.at(index).showSineWave) {
+			ImPlot::SetNextLineStyle(color);
+			ImPlot::PlotLineG(label.c_str(),
+					[](void* data, int idx) -> ImPlotPoint {
+						GenerateSineCandlesticksExampleApp* app = static_cast<GenerateSineCandlesticksExampleApp*>(data);
+						return app->displaySineWave(data, idx, index);
+					},
+					this, indexCount
+			);
+		}
+    }
+
+	template<typename SliderLambda>
+	void displayColumn(int maxIndex, const std::vector<ImVec4>& sineColors, const std::string& label, SliderLambda lambda)
+	{
+		ImGui::TableNextRow();
+		for (int index = 0; index < maxIndex; index++) {
+			ImGui::TableSetColumnIndex(index);
+			ImGui::PushStyleColor(ImGuiCol_Text, sineColors.at(index));
+			std::string text(label + "(" + std::to_string(index) + ")");
+			lambda(text, index);
+			ImGui::PopStyleColor();
+		}
+	}
 
 private:
 	GenerateSineCandlesticksExampleProgramOptions::ConfigPtr m_options;

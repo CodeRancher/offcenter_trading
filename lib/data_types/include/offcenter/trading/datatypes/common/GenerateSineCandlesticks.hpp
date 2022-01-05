@@ -62,26 +62,29 @@ public:
 	template<typename WaveLength>
 	const FloatType y(const WaveLength x) const {
 		std::chrono::milliseconds xInMillis = std::chrono::duration_cast<std::chrono::milliseconds>(x);
-		std::cout << "Wavelength: " << m_wavelength.count() << ", " << xInMillis.count() << ", " << m_wavelengthShift.count() << std::endl;
+		//std::cout << "Wavelength: " << m_wavelength.count() << ", " << xInMillis.count() << ", " << m_wavelengthShift.count() << std::endl;
 
-		std::cout << m_amplitudeShift << "+" << "(" << m_amplitude << "*offcenter::trading::datatypes::common::sine(((" << 2.0 << "*" << pi<FloatType> << ") /" << static_cast<FloatType>(m_wavelength.count()) << ") * " << static_cast<FloatType>(xInMillis.count()) << "+" << static_cast<FloatType>(m_wavelengthShift.count()) << "))" << std::endl;
+		//std::cout << m_amplitudeShift << "+" << "(" << m_amplitude << "*offcenter::trading::datatypes::common::sine(((" << 2.0 << "*" << pi<FloatType> << ") /" << static_cast<FloatType>(m_wavelength.count()) << " + " << static_cast<FloatType>(m_wavelengthShift.count()) << ") * " << static_cast<FloatType>(xInMillis.count()) << "))" << std::endl;
 
 
 
-		return m_amplitudeShift + (m_amplitude * offcenter::trading::datatypes::common::sine(((2.0 * pi<FloatType>) / static_cast<FloatType>(m_wavelength.count())) * static_cast<FloatType>(xInMillis.count()) + static_cast<FloatType>(m_wavelengthShift.count())));
+		return m_amplitudeShift + (m_amplitude * offcenter::trading::datatypes::common::sine(((2.0 * pi<FloatType>) / static_cast<FloatType>(m_wavelength.count())) * static_cast<FloatType>(xInMillis.count() - m_wavelengthShift.count())));
 	}
 
 	FloatType amplitude() const { return m_amplitude; }
-	void setAmplitude(FloatType mAmplitude)	{ m_amplitude = mAmplitude; }
+	void setAmplitude(FloatType amplitude)	{ m_amplitude = amplitude; }
 
 	FloatType amplitudeShift() const { return m_amplitudeShift; }
-	void setAmplitudeShift(FloatType mAmplitudeShift) { m_amplitudeShift = mAmplitudeShift; }
+	void setAmplitudeShift(FloatType amplitudeShift) { m_amplitudeShift = amplitudeShift; }
 
 	const WavelengthType& wavelength() const { return m_wavelength; }
-	void setWavelength(const WavelengthType &mWavelength) { m_wavelength = mWavelength; }
+	void setWavelength(const WavelengthType &wavelength) { m_wavelength = wavelength; }
 
 	const WavelengthType& wavelengthShift() const { return m_wavelengthShift; }
-	void setWavelengthShift(const WavelengthType &mWavelengthShift) { m_wavelengthShift = mWavelengthShift; }
+	void setWavelengthShift(const WavelengthType &wavelengthShift) {
+		m_wavelengthShift = wavelengthShift;
+		//std::cout << "Wavelength: " << m_wavelengthShift.count() << std::endl;
+	}
 
 	const FloatType maxAmplitude() const { return +m_amplitude + m_amplitudeShift; }
 	const FloatType minAmplitude() const { return -m_amplitude + m_amplitudeShift; }
@@ -290,6 +293,8 @@ public:
 	const FloatType maxAmplitude() const { return m_sineWaves.maxAmplitude(); }
 	const FloatType minAmplitude() const { return m_sineWaves.minAmplitude(); }
 	const std::chrono::milliseconds duration() const { return m_duration; }
+
+	const SineWave<FloatType>& sineWave(int index) { return m_sineWaves.sine(index); }
 
 	void setAmplitude(int index, FloatType amplitude) {
 		m_sineWaves.sine(index).setAmplitude(amplitude);
