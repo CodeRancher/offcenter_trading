@@ -13,9 +13,12 @@ find_path(GMP_INCLUDES
   ${INCLUDE_INSTALL_DIR}
 )
 
-find_library(GMP_LIBRARIES gmp PATHS $ENV{GMPDIR} ${LIB_INSTALL_DIR})
+find_library(GMP_LIBRARIES NAMES libgmp.a gmp PATHS $ENV{GMPDIR} ${LIB_INSTALL_DIR})
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(GMP DEFAULT_MSG
                                   GMP_INCLUDES GMP_LIBRARIES)
 mark_as_advanced(GMP_INCLUDES GMP_LIBRARIES)
+
+message(STATUS "gmp Includes:                   ${GMP_INCLUDES}")
+message(STATUS "gmp Libraries:                  ${GMP_LIBRARIES}")

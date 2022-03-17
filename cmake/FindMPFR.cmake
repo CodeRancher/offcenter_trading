@@ -73,7 +73,7 @@ endif(MPFR_INCLUDES)
 
 # Set MPFR_LIBRARIES
 
-find_library(MPFR_LIBRARIES mpfr PATHS $ENV{GMPDIR} ${LIB_INSTALL_DIR})
+find_library(MPFR_LIBRARIES NAMES libmpfr.a mpfr PATHS $ENV{GMPDIR} ${LIB_INSTALL_DIR})
 
 # Epilogue
 
@@ -81,3 +81,6 @@ include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(MPFR DEFAULT_MSG
                                   MPFR_INCLUDES MPFR_LIBRARIES MPFR_VERSION_OK)
 mark_as_advanced(MPFR_INCLUDES MPFR_LIBRARIES)
+
+message(STATUS "mpfr Includes:                  ${MPFR_INCLUDES}")
+message(STATUS "mpfr Libraries:                 ${MPFR_LIBRARIES}")
