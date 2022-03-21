@@ -25,6 +25,7 @@
 
 #include <boost/multiprecision/mpfr.hpp>
 
+#include "offcenter/common/Types.hpp"
 #include "offcenter/trading/datatypes/common/Candlestick.hpp"
 
 namespace offcenter {
@@ -33,7 +34,7 @@ namespace datatypes {
 namespace calculation {
 
 //using CandlestickPrice = boost::multiprecision::mpfr_float;
-using CandlestickPrice = boost::multiprecision::number<boost::multiprecision::mpfr_float_backend<7> >;
+using CandlestickPrice = offcenter::common::MPF;
 
 using BidAskCandlestick = offcenter::trading::datatypes::common::BidAskCandlestick<CandlestickPrice>;
 

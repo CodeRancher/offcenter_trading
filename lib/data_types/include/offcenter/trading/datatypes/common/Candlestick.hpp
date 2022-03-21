@@ -27,7 +27,7 @@
 
 #include "offcenter/trading/common/Exceptions.hpp"
 #include "offcenter/common/DateTime.hpp"
-
+#include "offcenter/common/Conversions.hpp"
 
 namespace offcenter {
 namespace trading {
@@ -80,46 +80,60 @@ struct OHLC {
 		close() {}
 
 	/**
-	 * Simple initialization of OHLC
+	 * Generic initialization of OHLC
+	 * 
+	 * There must be a conversion routine to change SourceType to OHLCType
 	 *
 	 * @param lOpen Opening price of timeframe
 	 * @param lHigh Highest price of timeframe
 	 * @param lLow Lowest price of timeframe
 	 * @param lClose Closing price of timeframe
 	 */
-	OHLC(OHLCType lOpen, OHLCType lHigh, OHLCType lLow, OHLCType lClose):
-		open(lOpen),
-		high(lHigh),
-		low(lLow),
-		close(lClose) {}
+	template<typename SourceType>
+	OHLC(const SourceType& lOpen, const SourceType& lHigh, const SourceType& lLow, const SourceType& lClose)
+	{
+		using namespace offcenter::common;
+		convertTo(lOpen, open);
+		convertTo(lHigh, high);
+		convertTo(lLow, low);
+		convertTo(lClose, close);
+	}
 
 	/**
 	 * Initialization of OHLC with initializer list.
+	 * 
+	 * There must be a conversion routine to change SourceType to OHLCType
 	 *
 	 * @param list OHLC data in open, high, low, close order
 	 */
-	OHLC(std::initializer_list<OHLCType> list) {
+	template<typename SourceType>
+	OHLC(std::initializer_list<SourceType> list) {
 		if (list.size() != 4) { throw offcenter::trading::common::InvalidInitialization("Initializer list for OHLC must have 4 elements."); }
 
-		std::vector<OHLCType> elements(list);
-		open = elements[0];
-		high = elements[1];
-		low = elements[2];
-		close = elements[3];
+		std::vector<SourceType> elements(list);
+		using namespace offcenter::common;
+		convertTo(elements[0], open);
+		convertTo(elements[1], high);
+		convertTo(elements[2], low);
+		convertTo(elements[3], close);
 	}
 
 	/**
 	 * Copy constructor
+	 * 
+	 * There must be a conversion routine to change OtherOHLCType to OHLCType
 	 *
 	 * @param other Other OHLC to copy from
 	 */
 	template<typename OtherOHLCType>
-	OHLC(const OHLC<OtherOHLCType>& other):
-		open(other.open),
-		high(other.high),
-		low(other.low),
-		close(other.close)
-	{}
+	OHLC(const OHLC<OtherOHLCType>& other)
+	{
+		using namespace offcenter::common;
+		convertTo(other.open, open);
+		convertTo(other.high, high);
+		convertTo(other.low, low);
+		convertTo(other.close, close);
+	}
 
 	OHLCType open;	///> Open price of timeframe
 	OHLCType high;	///> Highest price of timeframe
@@ -128,107 +142,40 @@ struct OHLC {
 };
 
 /**
- * Basic candlestick data with Open, High, Low, and Close.
- *
- * Specialization for string
- */
-template<>
-struct OHLC<std::string> {
-	/**
-	 * Simple initialization of OHLC
-	 *
-	 * @param lOpen Opening price of timeframe
-	 * @param lHigh Highest price of timeframe
-	 * @param lLow Lowest price of timeframe
-	 * @param lClose Closing price of timeframe
-	 */
-	OHLC(std::string lOpen, std::string lHigh, std::string lLow, std::string lClose):
-		open(lOpen),
-		high(lHigh),
-		low(lLow),
-		close(lClose)
-	{}
-
-	/**
-	 * Initialization of OHLC with initializer list.
-	 *
-	 * @param list OHLC data in that order
-	 */
-	OHLC(std::initializer_list<std::string> list) {
-		if (list.size() != 4) { throw offcenter::trading::common::InvalidInitialization("Initializer list for OHLC must have 4 elements."); }
-
-		std::vector<std::string> elements(list);
-		open = elements[0];
-		high = elements[1];
-		low = elements[2];
-		close = elements[3];
-	}
-
-	/**
-	 * Copy constructor
-	 *
-	 * @param other OHLC element to copy
-	 */
-	template<typename OtherOHLCType>
-	OHLC(const OHLC<OtherOHLCType>& other):
-		open(other.open),
-		high(other.high),
-		low(other.low),
-		close(other.close)
-	{}
-
-	std::string open;	///> Open price of timeframe
-	std::string high;	///> Highest price of timeframe
-	std::string low;	///> Lowest price of timeframe
-	std::string close;	///> Closing price of timeframe
-};
-
-/**
  * Candlestick data for bid and ask with start time and volume
  *
  * @tparam OHLCType Type for OHLC elements
  */
-template<typename OHLCType>
+template<typename OHLCType, typename DateTimeType = offcenter::common::UTCDateTime>
 struct BidAskCandlestick {
 	/**
 	 * Initialization of Bid/Ask Candlestick
+	 * 
+	 * There must be a conversion routine to change SourceOHLCType to OHLCType
+	 * There must be a conversion routine to change SourceDateTimeType to DateTimeType
 	 *
 	 * @param lStartTime Starting time of candlestick
+	 * @param lEndTime Ending time of candlestick
 	 * @param lBidList Initializer list for Bid OHLC data
 	 * @param lAskList Initializer list for Ask OHLC data
 	 * @param lVolume Volume data for candlestick
 	 */
+	template<typename SourceOHLCType, typename SourceDateTimeType>
 	BidAskCandlestick(
-		const offcenter::common::UTCDateTime& lStartTime,
-		std::initializer_list<OHLCType> lBidList,
-		std::initializer_list<OHLCType> lAskList,
+		const SourceDateTimeType& lStartTime,
+		const SourceDateTimeType& lEndTime,
+		std::initializer_list<SourceOHLCType> lBidList,
+		std::initializer_list<SourceOHLCType> lAskList,
 		unsigned lVolume
 	):
-		startTime(lStartTime),
 		bid(lBidList),
 		ask(lAskList),
 		volume(lVolume)
-	{}
-
-	/**
-	 * Initialization of Bid/Ask Candlestick
-	 *
-	 * @param lStartTime Starting time of candlestick
-	 * @param lBidList Initializer list for Bid OHLC data
-	 * @param lAskList Initializer list for Ask OHLC data
-	 * @param lVolume Volume data for candlestick
-	 */
-	BidAskCandlestick(
-		const std::string& lStartTime,
-		std::initializer_list<OHLCType> lBidList,
-		std::initializer_list<OHLCType> lAskList,
-		unsigned lVolume
-	):
-		startTime(offcenter::common::make_UTCDateTimeFromISO8601(lStartTime)),
-		bid(lBidList),
-		ask(lAskList),
-		volume(lVolume)
-	{}
+	{
+		using namespace offcenter::common;
+		convertTo(lStartTime, startTime);
+		convertTo(lEndTime, endTime);
+	}
 
 	/**
 	 * Copy constructor.
@@ -238,13 +185,17 @@ struct BidAskCandlestick {
 	 */
 	template<typename OtherOHLCType>
 	BidAskCandlestick(const BidAskCandlestick<OtherOHLCType>& other):
-		startTime(other.startTime),
 		bid(other.bid),
 		ask(other.ask),
 		volume(other.volume)
-	{}
+	{
+		using namespace offcenter::common;
+		convertTo(other.startTime, startTime);
+		convertTo(other.endTime, endTime);
+	}
 
-	offcenter::common::UTCDateTime startTime; ///> Start time of timeframe
+	DateTimeType startTime; ///> Start time of timeframe
+	DateTimeType endTime; ///> End time of timeframe
 	OHLC<OHLCType> bid;	///> Bid OHLC data
 	OHLC<OHLCType> ask;	///> Ask OHLC data
 	unsigned volume;	///> Number of elements sold during timeframe
