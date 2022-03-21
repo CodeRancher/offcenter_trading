@@ -30,24 +30,31 @@ add_compile_definitions(ELPP_THREAD_SAFE)
 add_compile_definitions(ELPP_FRESH_LOG_FILE)
 add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)
 
-add_executable(offcenter_trading_data_types_tests
+set(EXE_NAME "${TEST_PREFIX}.${PROJECT_NAME}.data_types")
+
+add_executable(${EXE_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/date_time_test.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/candlestick_test.cpp
 	${CMAKE_CURRENT_LIST_DIR}/src/generate_sine_candlesticks_test.cpp
 )
 
-target_link_libraries(offcenter_trading_data_types_tests
+set_target_properties(${EXE_NAME}
+	PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_INSTALL_TEST_DIR}
+)
+
+target_link_libraries(${EXE_NAME}
 	offcenter_trading_data_types
 	Boost::headers
 	GTest::gtest
+	GTest::gmock
 	${EASYLOGGINGPP_LIBRARY}
 	${MPFR_LIBRARIES}
 	${GMP_LIBRARIES}
 )
-message(STATUS "MPFR_LIBRARIES       ${MPFR_LIBRARIES}")
 
-target_include_directories(offcenter_trading_data_types_tests
+target_include_directories(${EXE_NAME}
 	PUBLIC
 		${EASYLOGGINGPP_INCLUDE_DIR}
 		${CMAKE_CURRENT_LIST_DIR}/include
@@ -57,7 +64,7 @@ target_include_directories(offcenter_trading_data_types_tests
 	#	${Easyloggingpp_SOURCE_DIR}/src
 )
 
-gtest_discover_tests(offcenter_trading_data_types_tests)
+gtest_discover_tests(${EXE_NAME})
 
-add_test(NAME monolithic COMMAND offcenter_trading_data_types_tests)
+add_test(NAME monolithic COMMAND ${EXE_NAME})
 

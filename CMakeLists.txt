@@ -35,6 +35,14 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
   ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
   ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+  
+set(CMAKE_INSTALL_EXAMPLE_DIR "example")  
+set(EXAMPLE_PREFIX "example")  
+set(CMAKE_INSTALL_TEST_DIR "test")  
+set(TEST_PREFIX "test")  
+set(CMAKE_INSTALL_APPLICATION_DIR "trading")  
+set(APPLICATION_PREFIX "trading")  
+  
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -59,14 +67,18 @@ set(Boost_USE_RELEASE_LIBS       ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 find_package(Boost
-	1.74
+	1.76
 	COMPONENTS program_options atomic thread system regex filesystem random chrono serialization
 )
+
+find_package(GMP REQUIRED)
+find_package(MPFR REQUIRED)
 
 find_package(Soci REQUIRED)
 find_package(MariaDBClient REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(cpprestsdk REQUIRED)
+find_package(TBB REQUIRED)
 
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
