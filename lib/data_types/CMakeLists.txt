@@ -31,7 +31,6 @@ target_link_libraries(offcenter_trading_data_types
 	${MPFR_LIBRARIES}
 	${GMP_LIBRARIES}
 )
-message(STATUS "MPFR_LIBRARIES       ${MPFR_LIBRARIES}")
 
 add_subdirectory(example)
 if(ENABLE_UNIT_TESTS)
