@@ -1,40 +1,44 @@
+#
+# Copyright 2022 Scott Brauer
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an  BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+#
+# @file   CMakeLists.txt
+# @author Scott Brauer
+# @date   11-28-2022
+#
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+offcenter_cxx()
+offcenter_elpp()
 
-
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-
-cmake_policy(SET CMP0074 NEW)
-find_package(MariaDBClient REQUIRED)
-find_package(nlohmann_json REQUIRED)
-find_package(cpprestsdk REQUIRED)
-
-add_compile_definitions(ELPP_THREAD_SAFE)
-add_compile_definitions(ELPP_FRESH_LOG_FILE)
-add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)
-
-###############################################################################
-# Copy config file
-#configure_file(${CMAKE_CURRENT_LIST_DIR}/config.ini config.ini COPYONLY)
-file(COPY ${CMAKE_CURRENT_LIST_DIR}/oanda_persistence_manager.config.ini DESTINATION ${CMAKE_BINARY_DIR}/bin)
-message(STATUS "COPY ${CMAKE_CURRENT_LIST_DIR}/oanda_persistence_manager.config.ini DESTINATION ${CMAKE_BINARY_DIR}/bin")
+offcenter_exe_constants(trading_oanda_persistence_manager)
+offcenter_exe_config_file(${CMAKE_CURRENT_LIST_DIR}/oanda_persistence_manager.config.ini)
 
 ###############################################################################
 # Example Consumer
-add_executable (offcenter_trading_oanda_persistence_manager
+add_executable (${EXE_NAME}
     ${CMAKE_CURRENT_LIST_DIR}/src/oanda_persistence_manager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/OandaPersistenceManagerApp.cpp
 )
 
-target_link_libraries(offcenter_trading_oanda_persistence_manager
-	offcenter_common_framework
-	offcenter_common
-	offcenter_common_program_options
-	offcenter_common_restserver
-	offcenter_common_soci
+target_link_libraries(${EXE_NAME}
+	Offcenter::offcenter_common_framework
+	Offcenter::offcenter_common
+	Offcenter::offcenter_common_program_options
+	Offcenter::offcenter_common_restserver
+	Offcenter::offcenter_common_soci
 	offcenter_trading_data_types
 	offcenter_trading_data_types_json
 	offcenter_trading_data_types_soci
@@ -53,7 +57,7 @@ target_link_libraries(offcenter_trading_oanda_persistence_manager
 	Threads::Threads
 )
 
-target_include_directories(offcenter_trading_oanda_persistence_manager
+target_include_directories(${EXE_NAME}
 	BEFORE PUBLIC
 		${CMAKE_CURRENT_LIST_DIR}/include
 	SYSTEM
@@ -61,3 +65,5 @@ target_include_directories(offcenter_trading_oanda_persistence_manager
 		${ACTIVEMQCPP_INCLUDE_DIR}
 		${APR_INCLUDE_DIR}
 )
+
+offcenter_exe_install()

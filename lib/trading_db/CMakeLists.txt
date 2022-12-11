@@ -20,27 +20,30 @@
 # @date   04-06-2021
 #
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
+include(OffcenterBuild)
 
-set(OPENSSL_USE_STATIC_LIBS TRUE)
-find_package(OpenSSL REQUIRED)
-find_package(MariaDBClient REQUIRED)
+offcenter_cxx()
+offcenter_elpp()
+offcenter_lib_setup(offcenter_trading_db trading_db)
+set(version 0.0.1)
 
-add_library(offcenter_trading_db "")
+add_library(${LIB_NAME} STATIC)
 
-target_sources(offcenter_trading_db
+target_sources(${LIB_NAME}
 	PRIVATE
 		${CMAKE_CURRENT_LIST_DIR}/src/TradingDB.cpp
 		${CMAKE_CURRENT_LIST_DIR}/src/OandaTradingDB.cpp
 		${CMAKE_CURRENT_LIST_DIR}/src/CreateTradingDB.cpp
 )
 
-target_include_directories(offcenter_trading_db
+target_include_directories(${LIB_NAME}
 	PUBLIC
-		${CMAKE_CURRENT_LIST_DIR}/include
-		
-	SYSTEM
+		"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
+		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+)
+
+target_include_directories(${LIB_NAME}
+	SYSTEM PRIVATE
 		${MariaDBClient_INCLUDE_DIRS}
 		${SOCI_INCLUDE_DIR}/..
 		${nlohmann_json_SOURCE_DIR}/include
@@ -49,10 +52,10 @@ target_include_directories(offcenter_trading_db
 		${oanda_SOURCE_DIR}/include
 )
 
-target_link_libraries(offcenter_trading_db
+target_link_libraries(${LIB_NAME}
 	offcenter_trading_data_types
 	offcenter_trading_data_types_soci
-	offcenter_common_soci
+	Offcenter::offcenter_common_soci
 	${SOCI_mysql_PLUGIN}
 	${SOCI_LIBRARY}
 	MariaDBClient::MariaDBClient
@@ -60,6 +63,9 @@ target_link_libraries(offcenter_trading_db
 	Threads::Threads
 	OpenSSL::Crypto
 )
+
+include(OffcenterInstall)
+offcenter_lib_install()
 
 if(ENABLE_UNIT_TESTS)
     add_subdirectory(test)

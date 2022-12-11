@@ -1,13 +1,35 @@
+#
+# Copyright 2022 Scott Brauer
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an  BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+#
+# @file   CMakeLists.txt
+# @author Scott Brauer
+# @date   11-26-2022
+#
 
-find_package(nlohmann_json REQUIRED)
+include(OffcenterBuild)
 
-add_library(offcenter_trading_data_types_json "")
+offcenter_cxx()
+offcenter_elpp()
+offcenter_lib_setup(offcenter_trading_data_types_json trading_data_types_json)
+set(version 0.0.1)
 
-add_compile_definitions(ELPP_THREAD_SAFE)
-add_compile_definitions(ELPP_FRESH_LOG_FILE)
-add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)
+add_library(${LIB_NAME} STATIC)
 
-target_sources(offcenter_trading_data_types_json
+target_sources(${LIB_NAME}
 	PRIVATE
 		${CMAKE_CURRENT_LIST_DIR}/src/InstrumentJson.cpp
 		${CMAKE_CURRENT_LIST_DIR}/src/InstrumentCountJson.cpp
@@ -15,17 +37,24 @@ target_sources(offcenter_trading_data_types_json
 		${CMAKE_CURRENT_LIST_DIR}/src/JsonConversion.cpp
 )
 
-target_include_directories(offcenter_trading_data_types_json
+target_include_directories(${LIB_NAME}
 	PUBLIC
-		${CMAKE_CURRENT_LIST_DIR}/include
-		
-	SYSTEM
+		"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
+		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+)
+
+target_include_directories(${LIB_NAME}
+	SYSTEM PRIVATE
 		${EASYLOGGINGPP_INCLUDE_DIR}
 )
 
-target_link_libraries(offcenter_trading_data_types_json
+target_link_libraries(${LIB_NAME}
+	Offcenter::offcenter_common
 	offcenter_trading_common
 	offcenter_trading_data_types
 	${EASYLOGGINGPP_LIBRARY}
 	nlohmann_json::nlohmann_json
 )
+
+include(OffcenterInstall)
+offcenter_lib_install()

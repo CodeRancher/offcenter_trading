@@ -27,7 +27,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include "offcenter/soci/Session.hpp"
+#include "offcenter/common/soci/Session.hpp"
 
 #include "offcenter/trading/oandapersistenceclient/OandaPersistenceClient.hpp"
 #include "offcenter/trading/datatypes/oanda/Instrument.hpp"

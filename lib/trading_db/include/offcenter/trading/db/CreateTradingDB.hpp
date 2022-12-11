@@ -23,8 +23,8 @@
 #ifndef TRADING_LIB_TRADING_DB_SRC_CREATETRADINGDB_HPP_
 #define TRADING_LIB_TRADING_DB_SRC_CREATETRADINGDB_HPP_
 
-#include "offcenter/soci/Session.hpp"
-#include "offcenter/soci/MySQLOptions.hpp"
+#include "offcenter/common/soci/Session.hpp"
+#include "offcenter/common/soci/MySQLOptions.hpp"
 
 namespace offcenter {
 namespace trading {

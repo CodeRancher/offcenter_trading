@@ -1,17 +1,30 @@
+#
+# Copyright 2022 Scott Brauer
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an  BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+#
+# @file   CMakeLists.txt
+# @author Scott Brauer
+# @date   11-28-2022
+#
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+offcenter_cxx()
+offcenter_elpp()
 
-
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-
-cmake_policy(SET CMP0074 NEW)
-
-add_compile_definitions(ELPP_THREAD_SAFE)
-add_compile_definitions(ELPP_FRESH_LOG_FILE)
-add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)
+offcenter_exe_constants(trading_admin_manager)
+offcenter_exe_config_file(${CMAKE_CURRENT_LIST_DIR}/trading_admin_manager.config.ini)
 
 set(AMQP_LIBRARIES
 	offcenter_common_framework

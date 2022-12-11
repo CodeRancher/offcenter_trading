@@ -22,8 +22,8 @@
 #ifndef OFFCENTER_TRADING_DB_TRADINGDB_HPP_
 #define OFFCENTER_TRADING_DB_TRADINGDB_HPP_
 
-#include "offcenter/soci/Session.hpp"
-#include "offcenter/soci/MySQLOptions.hpp"
+#include "offcenter/common/soci/Session.hpp"
+#include "offcenter/common/soci/MySQLOptions.hpp"
 
 #include "offcenter/trading/datatypes/Instrument.hpp"
 #include "offcenter/trading/datatypes/CandlestickDataSeries.hpp"

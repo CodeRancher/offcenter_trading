@@ -24,10 +24,10 @@
 #define OFFCENTER_TRADING_AMQP_BASEPRODUCER_HPP_
 
 #include "offcenter/trading/amqp/ConnectionSettings.hpp"
-#include "offcenter/amqp/Helper.hpp"
-#include "offcenter/amqp/SessionProducer.hpp"
-#include "offcenter/amqp/SessionConsumer.hpp"
-#include "offcenter/amqp/MessageCallback.hpp"
+#include "offcenter/common/amqp/Helper.hpp"
+#include "offcenter/common/amqp/SessionProducer.hpp"
+#include "offcenter/common/amqp/SessionConsumer.hpp"
+#include "offcenter/common/amqp/MessageCallback.hpp"
 
 namespace offcenter {
 namespace trading {

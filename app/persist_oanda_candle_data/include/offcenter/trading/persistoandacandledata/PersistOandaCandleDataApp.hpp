@@ -30,8 +30,8 @@
 #include "offcenter/common/threading/RunningThreadArray.hpp"
 using namespace offcenter::common;
 
-#include "offcenter/soci/MySQLProgramOptions.hpp"
-#include "offcenter/soci/Session.hpp"
+#include "offcenter/common/soci/MySQLProgramOptions.hpp"
+#include "offcenter/common/soci/Session.hpp"
 
 #include "oanda/v20/endpoint/OandaEndpoints.hpp"
 using namespace oanda::v20;

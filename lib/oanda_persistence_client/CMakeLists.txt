@@ -18,26 +18,18 @@
 # @date   05-20-2021
 #
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include(OffcenterBuild)
 
-add_library(offcenter_trading_oanda_persistence_client "")
+offcenter_cxx()
+offcenter_elpp()
+offcenter_lib_setup(offcenter_trading_oanda_persistence_client trading_oanda_persistence_client)
+set(version 0.0.1)
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-
-cmake_policy(SET CMP0074 NEW)
-find_package(nlohmann_json REQUIRED)
-find_package(cpprestsdk REQUIRED)
-
-add_compile_definitions(ELPP_THREAD_SAFE)
-add_compile_definitions(ELPP_FRESH_LOG_FILE)
-add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)
+add_library(${LIB_NAME} STATIC)
 
 ###############################################################################
 # Example Consumer
-target_sources(offcenter_trading_oanda_persistence_client
+target_sources(${LIB_NAME}
 	PRIVATE
 		${CMAKE_CURRENT_LIST_DIR}/src/OandaPersistenceClient.cpp
 		${CMAKE_CURRENT_LIST_DIR}/src/OandaPersistenceEndpoints.cpp
@@ -45,20 +37,36 @@ target_sources(offcenter_trading_oanda_persistence_client
 		${CMAKE_CURRENT_LIST_DIR}/src/ProcessInstrumentDataThread.cpp
 )
 
-target_link_libraries(offcenter_trading_oanda_persistence_client
-	offcenter_common_framework
-	offcenter_common
-	offcenter_common_program_options
-	offcenter_common_restserver
-	offcenter_common_soci
-	offcenter_common_threading
+target_include_directories(${LIB_NAME}
+	BEFORE PUBLIC
+		"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
+		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+)
+
+target_include_directories(${LIB_NAME}
+	SYSTEM PRIVATE
+		${EASYLOGGINGPP_INCLUDE_DIR}
+		${ACTIVEMQCPP_INCLUDE_DIR}
+		${APR_INCLUDE_DIR}
+)
+
+target_link_libraries(${LIB_NAME}
+	Offcenter::offcenter_common_framework
+	Offcenter::offcenter_common
+	Offcenter::offcenter_common_program_options
+	Offcenter::offcenter_common_restserver
+	Offcenter::offcenter_common_soci
+	Offcenter::offcenter_common_threading
 	offcenter_trading_data_types
 	offcenter_trading_data_types_json
-	oanda_v20
+	Offcenter::oanda_v20
 	#offcenter_common_amqp
 	#offcenter_common_amqpserver
 	Boost::program_options
 	${EASYLOGGINGPP_LIBRARY}
+	${SOCI_mysql_PLUGIN}
+	${SOCI_LIBRARY}
+	MariaDBClient::MariaDBClient
 	cpprestsdk::cpprest
 	nlohmann_json::nlohmann_json
 	${ACTIVEMQCPP_LIBRARIES}
@@ -66,14 +74,8 @@ target_link_libraries(offcenter_trading_oanda_persistence_client
 	Threads::Threads
 )
 
-target_include_directories(offcenter_trading_oanda_persistence_client
-	BEFORE PUBLIC
-		${CMAKE_CURRENT_LIST_DIR}/include
-	SYSTEM
-		${EASYLOGGINGPP_INCLUDE_DIR}
-		${ACTIVEMQCPP_INCLUDE_DIR}
-		${APR_INCLUDE_DIR}
-)
+include(OffcenterInstall)
+offcenter_lib_install()
 
 if(ENABLE_UNIT_TESTS)
     add_subdirectory(test)

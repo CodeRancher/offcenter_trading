@@ -1,8 +1,0 @@
-set(OANDA_VERSION 0.0.1)
-#...
-@PACKAGE_INIT@
-#...
-set_and_check(OANDA_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
-set_and_check(OANDA_SYSCONFIG_DIR "@PACKAGE_SYSCONFIG_INSTALL_DIR@")
-
-check_required_components(Oanda)

@@ -25,8 +25,8 @@
 
 #include <vector>
 
-#include "offcenter/soci/Session.hpp"
-#include "offcenter/soci/MySQLOptions.hpp"
+#include "offcenter/common/soci/Session.hpp"
+#include "offcenter/common/soci/MySQLOptions.hpp"
 
 #include "offcenter/trading/datatypes/oanda/Instrument.hpp"
 

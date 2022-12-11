@@ -25,7 +25,7 @@
 
 #include "offcenter/trading/datatypes/Instrument.hpp"
 
-#include "offcenter/amqp/Helper.hpp"
+#include "offcenter/common/amqp/Helper.hpp"
 
 namespace offcenter {
 namespace trading {

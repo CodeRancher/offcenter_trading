@@ -31,8 +31,8 @@
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
 using namespace offcenter::common;
 
-#include "offcenter/soci/MySQLProgramOptions.hpp"
-#include "offcenter/soci/Session.hpp"
+#include "offcenter/common/soci/MySQLProgramOptions.hpp"
+#include "offcenter/common/soci/Session.hpp"
 
 #include "offcenter/trading/oandapersistencemanager/OandaPersistenceManagerProgramOptions.hpp"
 #include "offcenter/trading/db/oanda/OandaTradingDB.hpp"

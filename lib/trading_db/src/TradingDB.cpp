@@ -35,7 +35,7 @@
 #include "offcenter/trading/datatypes/CandlestickDataSeriesSoci.hpp"
 #include "offcenter/trading/datatypes/CandlestickDataSoci.hpp"
 #include "offcenter/trading/datatypes/LookupTableDataSoci.hpp"
-#include "offcenter/soci/Transaction.hpp"
+#include "offcenter/common/soci/Transaction.hpp"
 
 namespace offcenter {
 namespace trading {

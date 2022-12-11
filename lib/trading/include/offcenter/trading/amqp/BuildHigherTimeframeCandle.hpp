@@ -23,7 +23,7 @@
 #ifndef OFFCENTER_TRADING_AMQP_BUILDHIGHERTIMEFRAMECANDLE_HPP_
 #define OFFCENTER_TRADING_AMQP_BUILDHIGHERTIMEFRAMECANDLE_HPP_
 
-#include "offcenter/amqp/threading/ProcessAmqpMessageThread.hpp"
+#include "offcenter/common/amqp/threading/ProcessAmqpMessageThread.hpp"
 #include "offcenter/trading/datatypes/CandlestickDataAmqp.hpp"
 
 namespace offcenter {

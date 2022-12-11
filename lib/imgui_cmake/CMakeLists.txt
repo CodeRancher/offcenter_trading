@@ -1,7 +1,31 @@
+#
+# Copyright 2022 Scott Brauer
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an  BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+#
+# @file   CMakeLists.txt
+# @author Scott Brauer
+# @date   11-27-2022
+#
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include(OffcenterBuild)
+
+offcenter_cxx()
+offcenter_elpp()
+offcenter_lib_setup(imgui imgui)
+set(version 0.0.1)
 
 #add_compile_definitions(IMGUI_IMPL_OPENGL_LOADER_GL3W)
 add_compile_definitions(IMGUI_IMPL_OPENGL_ES2)
@@ -11,9 +35,9 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 #find_package(glew REQUIRED)
 
-add_library(imgui STATIC)
+add_library(${LIB_NAME} STATIC)
 
-target_sources(imgui
+target_sources(${LIB_NAME}
 	PRIVATE
 		${CMAKE_CURRENT_LIST_DIR}/imgui/imgui.cpp
 		${CMAKE_CURRENT_LIST_DIR}/imgui/imgui_demo.cpp
@@ -66,7 +90,7 @@ target_sources(imgui
 #	OpenGL::GL
 #)
 
-target_include_directories(imgui
+target_include_directories(${LIB_NAME}
 	PUBLIC
 		"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/imgui>"
 		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/imgui>"
@@ -77,6 +101,9 @@ target_include_directories(imgui
 		#"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/imgui/examples/libs/gl3w>"
 		#"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/imgui/examples/libs/gl3w>"
 )
+
+include(OffcenterInstall)
+offcenter_lib_install()
 
 add_executable(imgui_example_glfw_opengl3
 		${CMAKE_CURRENT_LIST_DIR}/imgui/examples/example_glfw_opengl3/main.cpp

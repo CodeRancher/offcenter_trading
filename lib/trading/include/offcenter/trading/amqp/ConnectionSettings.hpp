@@ -27,7 +27,7 @@
 #include <utility>
 #include <initializer_list>
 
-#include "offcenter/amqp/ConnectionSettings.hpp"
+#include "offcenter/common/amqp/ConnectionSettings.hpp"
 
 namespace offcenter {
 namespace trading {

@@ -26,7 +26,7 @@
 #include <string>
 #include <memory>
 
-#include "offcenter/soci/MySQLOptions.hpp"
+#include "offcenter/common/soci/MySQLOptions.hpp"
 
 extern std::string g_dbname;
 extern std::string g_user;

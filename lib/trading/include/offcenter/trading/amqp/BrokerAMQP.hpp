@@ -24,7 +24,7 @@
 #define OFFCENTER_TRADING_AMQP_BROKERPRODUCER_HPP_
 
 #include "offcenter/trading/amqp/BaseAMQP.hpp"
-#include "offcenter/amqp/Helper.hpp"
+#include "offcenter/common/amqp/Helper.hpp"
 #include "offcenter/trading/datatypes/Broker.hpp"
 
 namespace offcenter {

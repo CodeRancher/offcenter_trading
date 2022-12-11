@@ -20,17 +20,9 @@
 # @date   04-11-2019
 #
 
-#set(THREADS_PREFER_PTHREAD_FLAG ON)
-#find_package(Threads REQUIRED)
-
-#include(GoogleTest)
-#find_package(GTest REQUIRED)
-
-add_compile_definitions(ELPP_THREAD_SAFE)
-add_compile_definitions(ELPP_FRESH_LOG_FILE)
-add_compile_definitions(ELPP_NO_DEFAULT_LOG_FILE)
-
-set(EXE_NAME "${TEST_PREFIX}.${PROJECT_NAME}.data_types")
+offcenter_cxx()
+offcenter_elpp()
+offcenter_test_constants(data_types)
 
 add_executable(${EXE_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
@@ -39,12 +31,9 @@ add_executable(${EXE_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/generate_sine_candlesticks_test.cpp
 )
 
-set_target_properties(${EXE_NAME}
-	PROPERTIES
-		RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_INSTALL_TEST_DIR}
-)
-
 target_link_libraries(${EXE_NAME}
+	Offcenter::offcenter_common
+	offcenter_trading_common
 	offcenter_trading_data_types
 	Boost::headers
 	GTest::gtest
@@ -64,7 +53,4 @@ target_include_directories(${EXE_NAME}
 	#	${Easyloggingpp_SOURCE_DIR}/src
 )
 
-gtest_discover_tests(${EXE_NAME})
-
-add_test(NAME monolithic COMMAND ${EXE_NAME})
-
+offcenter_test()

@@ -23,7 +23,7 @@ add_executable(offcenter_trading_tests
 )
 
 target_link_libraries(offcenter_trading_tests
-	oanda_v20
+	Offcenter::oanda_v20
 	cpprestsdk::cpprest
 	GTest::gtest
 	${EASYLOGGINGPP_LIBRARY}

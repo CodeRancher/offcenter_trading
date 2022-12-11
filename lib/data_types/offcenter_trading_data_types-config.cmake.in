@@ -1,0 +1,5 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/offcenter_trading_data_typesTargets.cmake")
+
+check_required_components(offcenter_trading_data_types)

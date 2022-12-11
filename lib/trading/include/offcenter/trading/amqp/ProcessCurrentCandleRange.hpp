@@ -23,15 +23,15 @@
 #ifndef OFFCENTER_TRADING_AMQP_PROCESSCURRENTCANDLERANGE_HPP_
 #define OFFCENTER_TRADING_AMQP_PROCESSCURRENTCANDLERANGE_HPP_
 
-#include "offcenter/amqp/threading/ProcessAmqpMessageThread.hpp"
+#include "offcenter/common/amqp/threading/ProcessAmqpMessageThread.hpp"
 #include "offcenter/common/DateTime.hpp"
 #include "offcenter/trading/datatypes/CandlestickTimeRangeAmqp.hpp"
 
 #include "offcenter/trading/oandapersistenceclient/OandaPersistenceEndpoints.hpp"
 
-#include "offcenter/amqp/Helper.hpp"
-#include "offcenter/amqp/ProducerMessageProducer.hpp"
-#include "offcenter/amqp/ActiveMQCPP.hpp"
+#include "offcenter/common/amqp/Helper.hpp"
+#include "offcenter/common/amqp/ProducerMessageProducer.hpp"
+#include "offcenter/common/amqp/ActiveMQCPP.hpp"
 
 namespace offcenter {
 namespace trading {

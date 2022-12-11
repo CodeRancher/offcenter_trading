@@ -22,7 +22,7 @@
 
 #include <gtest/gtest.h>
 
-#include "offcenter/soci/MySQLProgramOptions.hpp"
+#include "offcenter/common/soci/MySQLProgramOptions.hpp"
 #include "offcenter/trading/db/CreateTradingDB.hpp"
 
 #include "globalvariables.hpp"
