@@ -36,11 +36,11 @@ namespace amqp {
 /**
  *
  */
-class ConnectionSettings: public offcenter::amqp::ConnectionSettings
+class ConnectionSettings: public offcenter::common::amqp::ConnectionSettings
 {
 public:
-	explicit ConnectionSettings(const std::string& queueName = "", offcenter::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
-			offcenter::amqp::ConnectionSettings(cms::Session::AcknowledgeMode::AUTO_ACKNOWLEDGE, QueueType::Queue, "offcenter.trade." + queueName, queueParameters)
+	explicit ConnectionSettings(const std::string& queueName = "", offcenter::common::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
+			offcenter::common::amqp::ConnectionSettings(cms::Session::AcknowledgeMode::AUTO_ACKNOWLEDGE, QueueType::Queue, "offcenter.trade." + queueName, queueParameters)
 	{}
 
 	virtual ~ConnectionSettings() = default;

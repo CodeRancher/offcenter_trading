@@ -42,8 +42,8 @@ public:
 	CreateTradingDB();
 	virtual ~CreateTradingDB();
 
-	void dropDatabase(const offcenter::soci::MySQLOptions& options);
-	void openDatabase(const offcenter::soci::MySQLOptions& options, bool createIfNotFound = true);
+	void dropDatabase(const offcenter::common::soci::MySQLOptions& options);
+	void openDatabase(const offcenter::common::soci::MySQLOptions& options, bool createIfNotFound = true);
 	void closeDatabase();
 	void createDatabase();
 
@@ -61,7 +61,7 @@ private:
 	void createView(const std::string& tableSchema);
 
 private:
-	offcenter::soci::SessionPoolManager m_sessionPoolManager;
+	offcenter::common::soci::SessionPoolManager m_sessionPoolManager;
 	bool m_hideStdOut;
 };
 

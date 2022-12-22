@@ -33,6 +33,6 @@ extern std::string g_user;
 extern std::string g_password;
 extern std::string g_host;
 
-std::shared_ptr<offcenter::soci::MySQLOptions> getConnectionOptions();
+std::shared_ptr<offcenter::common::soci::MySQLOptions> getConnectionOptions();
 
 #endif /* TEST_SRC_GLOBALVARIABLES_HPP_ */

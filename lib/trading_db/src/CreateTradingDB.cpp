@@ -47,7 +47,7 @@ CreateTradingDB::~CreateTradingDB()
 
 }
 
-void CreateTradingDB::dropDatabase(const offcenter::soci::MySQLOptions &options)
+void CreateTradingDB::dropDatabase(const offcenter::common::soci::MySQLOptions &options)
 {
 	if (!m_hideStdOut) {
 		std::cout << std::endl << "Drop database: " << options.host() << ":" << options.dbname() << std::endl;
@@ -56,7 +56,7 @@ void CreateTradingDB::dropDatabase(const offcenter::soci::MySQLOptions &options)
 	m_sessionPoolManager.dropDB(options);
 }
 
-void CreateTradingDB::openDatabase(const offcenter::soci::MySQLOptions &options, bool createIfNotFound)
+void CreateTradingDB::openDatabase(const offcenter::common::soci::MySQLOptions &options, bool createIfNotFound)
 {
 	if (!m_hideStdOut) {
 		std::cout << std::endl << "Open database: " << options.host() << ":" << options.dbname() << std::endl;
@@ -143,30 +143,30 @@ void CreateTradingDB::createViews()
 void CreateTradingDB::createAndPopulateTable(const std::string &tableSchema, const std::string &tableData)
 {
 	if (!m_hideStdOut) {
-		std::cout << "Create and populate: " << offcenter::soci::parseTableName(tableSchema) << std::endl;
+		std::cout << "Create and populate: " << offcenter::common::soci::parseTableName(tableSchema) << std::endl;
 	}
 
-	offcenter::soci::SessionActions sessionActions(m_sessionPoolManager);
+	offcenter::common::soci::SessionActions sessionActions(m_sessionPoolManager);
 	sessionActions.createAndPopulateTable(tableSchema, tableData);
 }
 
 void CreateTradingDB::createTable(const std::string &tableSchema)
 {
 	if (!m_hideStdOut) {
-		std::cout << "Create: " << offcenter::soci::parseTableName(tableSchema) << std::endl;
+		std::cout << "Create: " << offcenter::common::soci::parseTableName(tableSchema) << std::endl;
 	}
 
-	offcenter::soci::SessionActions sessionActions(m_sessionPoolManager);
+	offcenter::common::soci::SessionActions sessionActions(m_sessionPoolManager);
 	sessionActions.createTable(tableSchema);
 }
 
 void CreateTradingDB::createView(const std::string &tableSchema)
 {
 	if (!m_hideStdOut) {
-		std::cout << "Create: " << offcenter::soci::parseTableName(tableSchema) << std::endl;
+		std::cout << "Create: " << offcenter::common::soci::parseTableName(tableSchema) << std::endl;
 	}
 
-	offcenter::soci::SessionActions sessionActions(m_sessionPoolManager);
+	offcenter::common::soci::SessionActions sessionActions(m_sessionPoolManager);
 	sessionActions.createView(tableSchema);
 }
 

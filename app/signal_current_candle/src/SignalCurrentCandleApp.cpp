@@ -26,8 +26,7 @@
 #include "easylogging++.h"
 
 #include "offcenter/common/InterruptHandler.hpp"
-//using namespace offcenter::common;
-
+//
 #include "offcenter/common/amqp/Listener.hpp"
 #include "offcenter/common/amqp/URLSchemeHost.hpp"
 #include "offcenter/common/amqp/ProducerMessageProducer.hpp"
@@ -54,22 +53,22 @@ SignalCurrentCandleApp::~SignalCurrentCandleApp() {
 }
 
 void SignalCurrentCandleApp::onInitProgramOptions(
-        program_options::ProgramOptionsManager &optionsManager)
+        offcenter::common::program_options::ProgramOptionsManager &optionsManager)
 {
 	m_amqpServerOptions = optionsManager.add<offcenter::common::amqpserver::AmqpConnectionProgramOptions>();
 	m_options = optionsManager.add<offcenter::trading::signalcurrentcandle::SignalCurrentCandleProgramOptions>();
 	m_persistenceManagerConfig = optionsManager.add<offcenter::trading::oandapersistenceclient::PersistenceManagerProgramOptions>();
 }
 
-void SignalCurrentCandleApp::onInitAMQP(offcenter::amqp::ConnectionURIOptions& options)
+void SignalCurrentCandleApp::onInitAMQP(offcenter::common::amqp::ConnectionURIOptions& options)
 {
 	options = *m_amqpServerOptions;
 }
 
-void SignalCurrentCandleApp::onInitAMQPSessions(offcenter::amqp::ConnectionPtr connection)
+void SignalCurrentCandleApp::onInitAMQPSessions(offcenter::common::amqp::ConnectionPtr connection)
 {
 	// Create a Session
-	m_session = offcenter::amqp::helper::sessionFactory(connection->createSession(cms::Session::AUTO_ACKNOWLEDGE));
+	m_session = offcenter::common::amqp::helper::sessionFactory(connection->createSession(cms::Session::AUTO_ACKNOWLEDGE));
 }
 
 

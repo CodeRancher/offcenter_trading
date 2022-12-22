@@ -62,10 +62,10 @@ void AmqpProducerExampleApp::onInitAMQP(amqp::ConnectionURIOptions& options) {
 
 void AmqpProducerExampleApp::onInitAMQPSessions(amqp::ConnectionPtr connection) {
 	// Create a Session
-	m_session = offcenter::amqp::helper::sessionFactory(connection->createSession(cms::Session::AUTO_ACKNOWLEDGE));
+	m_session = offcenter::common::amqp::helper::sessionFactory(connection->createSession(cms::Session::AUTO_ACKNOWLEDGE));
 
 	// Create the destination (Topic or Queue)
-	m_destination = offcenter::amqp::helper::destinationFactory(m_session->createTopic("offcenter.test.input"));
+	m_destination = offcenter::common::amqp::helper::destinationFactory(m_session->createTopic("offcenter.test.input"));
 }
 
 
@@ -75,7 +75,7 @@ void AmqpProducerExampleApp::onSetUp()
 
 void AmqpProducerExampleApp::onExecute()
 {
-	offcenter::amqp::ProducerMessageHandler producer(m_session, m_destination);
+	offcenter::common::amqp::ProducerMessageHandler producer(m_session, m_destination);
 	producer()->setDeliveryMode(cms::DeliveryMode::NON_PERSISTENT);
 
 	for (int cnt = 1; cnt <= 100; cnt++) {

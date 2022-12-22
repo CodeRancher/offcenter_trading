@@ -92,8 +92,7 @@ struct OHLC {
 	template<typename SourceType>
 	OHLC(const SourceType& lOpen, const SourceType& lHigh, const SourceType& lLow, const SourceType& lClose)
 	{
-		using namespace offcenter::common;
-		convertTo(lOpen, open);
+				convertTo(lOpen, open);
 		convertTo(lHigh, high);
 		convertTo(lLow, low);
 		convertTo(lClose, close);
@@ -111,8 +110,7 @@ struct OHLC {
 		if (list.size() != 4) { throw offcenter::trading::common::InvalidInitialization("Initializer list for OHLC must have 4 elements."); }
 
 		std::vector<SourceType> elements(list);
-		using namespace offcenter::common;
-		convertTo(elements[0], open);
+				convertTo(elements[0], open);
 		convertTo(elements[1], high);
 		convertTo(elements[2], low);
 		convertTo(elements[3], close);
@@ -128,8 +126,7 @@ struct OHLC {
 	template<typename OtherOHLCType>
 	OHLC(const OHLC<OtherOHLCType>& other)
 	{
-		using namespace offcenter::common;
-		convertTo(other.open, open);
+				convertTo(other.open, open);
 		convertTo(other.high, high);
 		convertTo(other.low, low);
 		convertTo(other.close, close);
@@ -172,8 +169,7 @@ struct BidAskCandlestick {
 		ask(lAskList),
 		volume(lVolume)
 	{
-		using namespace offcenter::common;
-		convertTo(lStartTime, startTime);
+				convertTo(lStartTime, startTime);
 		convertTo(lEndTime, endTime);
 	}
 
@@ -189,8 +185,7 @@ struct BidAskCandlestick {
 		ask(other.ask),
 		volume(other.volume)
 	{
-		using namespace offcenter::common;
-		convertTo(other.startTime, startTime);
+				convertTo(other.startTime, startTime);
 		convertTo(other.endTime, endTime);
 	}
 

@@ -29,7 +29,7 @@ namespace trading {
 namespace amqp {
 
 BuildHigherTimeframeCandle::BuildHigherTimeframeCandle(
-        offcenter::amqp::SessionPtr session,
+        offcenter::common::amqp::SessionPtr session,
         const std::string &broker,
         const std::string &server,
         const std::string &instrument,

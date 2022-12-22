@@ -42,7 +42,7 @@ GenerateSineCandlesticksApp::~GenerateSineCandlesticksApp() {
 }
 
 void GenerateSineCandlesticksApp::onInitProgramOptions(
-        program_options::ProgramOptionsManager &optionsManager)
+        offcenter::common::program_options::ProgramOptionsManager &optionsManager)
 {
 	m_generateSineCandlesticksOptions = optionsManager.add<offcenter::trading::generatesinecandlesticks::GenerateSineCandlesticksProgramOptions>();
 }

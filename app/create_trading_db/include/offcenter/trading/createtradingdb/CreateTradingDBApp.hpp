@@ -27,7 +27,6 @@
 //#include "offcenter/common/framework/application/BasicApp.hpp"
 #include "offcenter/common/framework/application/BasicAppConfig.hpp"
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/common/soci/MySQLProgramOptions.hpp"
 //#include "offcenter/common/soci/Session.hpp"
@@ -42,12 +41,12 @@ namespace createtradingdb {
 /**
  *
  */
-class CreateTradingDBApp: public framework::application::IApp {
+class CreateTradingDBApp: public offcenter::common::framework::application::IApp {
 public:
 	CreateTradingDBApp();
 	virtual ~CreateTradingDBApp();
 
-	void onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager) override;
+	void onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager) override;
 	void onSetUp() override;
 	void onExecute() override;
 	void onTearDown() override;
@@ -55,7 +54,7 @@ public:
 	void onVersion() override;
 
 private:
-	offcenter::soci::MySQLProgramOptions::ConfigPtr m_mysqlConfig;
+	offcenter::common::soci::MySQLProgramOptions::ConfigPtr m_mysqlConfig;
 	offcenter::trading::db::CreateTradingDB m_createTradingDB;
 	offcenter::trading::createtradingdb::CreateTradingDBProgramOptions::ConfigPtr m_createTradingDBConfig;
 

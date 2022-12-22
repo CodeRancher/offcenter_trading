@@ -53,9 +53,9 @@ OandaPersistenceManagerApp::~OandaPersistenceManagerApp()
 	// TODO Auto-generated destructor stub
 }
 
-void OandaPersistenceManagerApp::onInitProgramOptions(program_options::ProgramOptionsManager &optionsManager)
+void OandaPersistenceManagerApp::onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager &optionsManager)
 {
-	m_mysqlConfig = optionsManager.add<offcenter::soci::MySQLProgramOptions>();
+	m_mysqlConfig = optionsManager.add<offcenter::common::soci::MySQLProgramOptions>();
 	m_oandaPersistenceManagerConfig = optionsManager.add<offcenter::trading::oandapersistencemanager::OandaPersistenceManagerProgramOptions>();
 	m_restServerConfig = optionsManager.add<offcenter::common::restserver::RestServerProgramOptions>();
 }
@@ -69,7 +69,7 @@ void OandaPersistenceManagerApp::onSetUp()
 	m_tradingDB.initialize(*m_mysqlConfig);
 }
 
-void OandaPersistenceManagerApp::onInitMethodHandlers(restserver::AutoMethodHandler &methodHandler)
+void OandaPersistenceManagerApp::onInitMethodHandlers(offcenter::common::restserver::AutoMethodHandler &methodHandler)
 {
 	std::cout << "Initializing HTTP handling" << std::endl;
 

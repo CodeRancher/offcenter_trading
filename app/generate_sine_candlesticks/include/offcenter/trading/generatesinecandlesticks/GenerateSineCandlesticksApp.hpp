@@ -40,7 +40,7 @@ public:
 	explicit GenerateSineCandlesticksApp();
 	virtual ~GenerateSineCandlesticksApp();
 
-	void onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager) override;
+	void onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager) override;
 	void onSetUp() override;
 	void onTearDown() override;
 	void onHelp(const std::string& help) override;

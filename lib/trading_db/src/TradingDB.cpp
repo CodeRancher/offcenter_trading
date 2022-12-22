@@ -64,7 +64,7 @@ TradingDB::~TradingDB()
  *
  * @param options connection options to the MySQL database
  */
-void TradingDB::initialize(const offcenter::soci::MySQLOptions &options)
+void TradingDB::initialize(const offcenter::common::soci::MySQLOptions &options)
 {
 	m_sessionPoolManager.open(options);
 }
@@ -88,7 +88,7 @@ void TradingDB::instrumentCreate(const offcenter::trading::datatypes::Instrument
 		);
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::use(instrument));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithTransaction, &session);
 }
@@ -107,7 +107,7 @@ void TradingDB::instrumentRead(
 		SELECT * FROM instrument WHERE name = :name;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << read, ::soci::into(instrument), ::soci::use(name));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithoutTransaction);
 }
@@ -126,7 +126,7 @@ void TradingDB::instrumentRead(
 		SELECT * FROM instrument WHERE instrument_id = :instrument_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << read, ::soci::into(instrument), ::soci::use(instrument_id));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithoutTransaction);
 }
@@ -148,7 +148,7 @@ void TradingDB::instrumentUpdate(
 			instrument_id = :instrument_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::use(instrument));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithTransaction, &session);
 }
@@ -164,7 +164,7 @@ void TradingDB::instrumentDelete(const std::string& name)
 		DELETE FROM instrument WHERE name = :name;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::use(name));
 	executeStatement(st, SOCIDataExchange::WithoutDataExchange, SOCITransaction::WithTransaction, &session);
 }
@@ -180,7 +180,7 @@ void TradingDB::instrumentDelete(unsigned instrument_id)
 		DELETE FROM instrument WHERE instrument_id = :instrument_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::use(instrument_id));
 	executeStatement(st, SOCIDataExchange::WithoutDataExchange, SOCITransaction::WithTransaction, &session);
 }
@@ -198,7 +198,7 @@ unsigned int TradingDB::instrumentsCount()
 	)###";
 
 	int count = 0;
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::into(count));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithoutTransaction);
 	return count;
@@ -225,7 +225,7 @@ void TradingDB::candlestickDataSeriesCreate(
 		);
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << insert, ::soci::use(candlestick_data_series));
 	try {
 		executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithTransaction, &session);
@@ -269,7 +269,7 @@ void TradingDB::candlestickDataSeriesIDRead(
 			AND cg.name = :candlestick_granularity_name
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql,
 			::soci::into(candlestick_data_series.candlestick_data_series_id),
 			::soci::use(instrument_name, "instrument_name"),
@@ -306,7 +306,7 @@ void TradingDB::candlestickDataSeriesRead(
 	)###";
 
 	try {
-		offcenter::soci::Session session(m_sessionPoolManager);
+		offcenter::common::soci::Session session(m_sessionPoolManager);
 		::soci::rowset<offcenter::trading::datatypes::CandlestickDataSeriesComplete> rs = (session().prepare << sql);
 		for (::soci::rowset<offcenter::trading::datatypes::CandlestickDataSeriesComplete>::const_iterator it = rs.begin(); it != rs.end(); ++it) {
 			candlestick_data_series.push_back(*it);
@@ -330,7 +330,7 @@ void TradingDB::candlestickDataSeriesRead(
 		SELECT * FROM v_candlestick_data_series WHERE candlestick_data_series_id = :candlestick_data_series_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::into(candlestick_data_series), ::soci::use(candlestick_data_series_id));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithoutTransaction);
 }
@@ -354,7 +354,7 @@ void TradingDB::candlestickDataSeriesRead(
 		  AND candlestick_granularity_name = candlestick_granularity_name;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::into(candlestick_data_series_id), ::soci::use(candlestick_data_series_by_name));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithoutTransaction);
 }
@@ -383,7 +383,7 @@ void TradingDB::candlestickDataSeriesDelete(unsigned candlestick_data_series_id)
 		DELETE FROM candlestick_data_series WHERE candlestick_data_series_id = :candlestick_data_series_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::use(candlestick_data_series_id));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithTransaction, &session);
 }
@@ -462,9 +462,9 @@ void TradingDB::candlestickDataCreate(
 		bool atLeastOneRecordSaved = false;
 		offcenter::trading::datatypes::CandlestickData candlestick_data;
 		{
-			offcenter::soci::Session session(m_sessionPoolManager);
+			offcenter::common::soci::Session session(m_sessionPoolManager);
 			::soci::statement st = (session().prepare << sql, ::soci::use(candlestick_data));
-			offcenter::soci::Transaction transaction(session);
+			offcenter::common::soci::Transaction transaction(session);
 			for (offcenter::trading::datatypes::CandlestickData element : candlestick_data_create.candlestick_data) {
 				candlestick_data = element;
 				candlestick_data.candlestick_data_series_id = candlestick_data_series_id;
@@ -529,7 +529,7 @@ void TradingDB::candlestickDataRead(
 	candlestick_range.end_time = candlestick_search.end_time;
 
 	try {
-		offcenter::soci::Session session(m_sessionPoolManager);
+		offcenter::common::soci::Session session(m_sessionPoolManager);
 		if (candlestick_search.include_start_time) {
 			::soci::rowset<offcenter::trading::datatypes::CandlestickData> rs = (session().prepare << read_include_start, ::soci::use(candlestick_search));
 			for (::soci::rowset<offcenter::trading::datatypes::CandlestickData>::const_iterator it = rs.begin(); it != rs.end(); ++it)
@@ -573,7 +573,7 @@ void TradingDB::candlestickDataDelete(unsigned candlestick_data_id)
 		DELETE FROM candlestick_data WHERE candlestick_data_id = :candlestick_data_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::use(candlestick_data_id));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithTransaction, &session);
 }
@@ -604,7 +604,7 @@ void TradingDB::candlestickDataAfterDate(
 		LIMIT 1
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql,
 			::soci::into(candlestick_data),
 			::soci::use(candlestick_search));
@@ -630,7 +630,7 @@ void TradingDB::candlestickDataAfterDate(
 unsigned int TradingDB::currencyPairCount()
 {
 	unsigned int recordCount = 0;
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << "SELECT COUNT(currency_pair_id) FROM currency_pair", ::soci::into(recordCount));
 	executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithoutTransaction);
 	return recordCount;
@@ -649,7 +649,7 @@ void TradingDB::brokersRead(
 	)###";
 
 	try {
-		offcenter::soci::Session session(m_sessionPoolManager);
+		offcenter::common::soci::Session session(m_sessionPoolManager);
 		::soci::rowset<offcenter::trading::datatypes::BrokerDB> rs = (session().prepare << read);
 		for (::soci::rowset<offcenter::trading::datatypes::BrokerDB>::const_iterator it = rs.begin(); it != rs.end(); ++it) {
 			records.records.push_back(*it);
@@ -672,7 +672,7 @@ void TradingDB::brokerDataSourceRead(
 	)###";
 
 	try {
-		offcenter::soci::Session session(m_sessionPoolManager);
+		offcenter::common::soci::Session session(m_sessionPoolManager);
 		::soci::rowset<offcenter::trading::datatypes::BrokerDataSource> rs = (session().prepare << read);
 		for (::soci::rowset<offcenter::trading::datatypes::BrokerDataSource>::const_iterator it = rs.begin(); it != rs.end(); ++it) {
 			records.records.push_back(*it);
@@ -695,7 +695,7 @@ void TradingDB::instrumentTypeRead(
 	)###";
 
 	try {
-		offcenter::soci::Session session(m_sessionPoolManager);
+		offcenter::common::soci::Session session(m_sessionPoolManager);
 		::soci::rowset<offcenter::trading::datatypes::InstrumentType> rs = (session().prepare << read);
 		for (::soci::rowset<offcenter::trading::datatypes::InstrumentType>::const_iterator it = rs.begin(); it != rs.end(); ++it) {
 			records.records.push_back(*it);
@@ -718,7 +718,7 @@ void TradingDB::guaranteedStopLossOrderModeForInstrumentRead(
 	)###";
 
 	try {
-		offcenter::soci::Session session(m_sessionPoolManager);
+		offcenter::common::soci::Session session(m_sessionPoolManager);
 		::soci::rowset<offcenter::trading::datatypes::GuaranteedStopLossOrderModeForInstrument> rs = (session().prepare << read);
 		for (::soci::rowset<offcenter::trading::datatypes::GuaranteedStopLossOrderModeForInstrument>::const_iterator it = rs.begin(); it != rs.end(); ++it) {
 			records.records.push_back(*it);
@@ -740,7 +740,7 @@ void TradingDB::dayOfWeek(offcenter::trading::datatypes::AllDayOfWeek &records)
 	)###";
 
 	try {
-		offcenter::soci::Session session(m_sessionPoolManager);
+		offcenter::common::soci::Session session(m_sessionPoolManager);
 		::soci::rowset<offcenter::trading::datatypes::DayOfWeek> rs = (session().prepare << read);
 		for (::soci::rowset<offcenter::trading::datatypes::DayOfWeek>::const_iterator it = rs.begin(); it != rs.end(); ++it) {
 			records.records.push_back(*it);
@@ -763,7 +763,7 @@ void TradingDB::candlestickGranularity(
 	)###";
 
 	try {
-		offcenter::soci::Session session(m_sessionPoolManager);
+		offcenter::common::soci::Session session(m_sessionPoolManager);
 		::soci::rowset<offcenter::trading::datatypes::CandlestickGranularity> rs = (session().prepare << read);
 		for (::soci::rowset<offcenter::trading::datatypes::CandlestickGranularity>::const_iterator it = rs.begin(); it != rs.end(); ++it) {
 			records.records.push_back(*it);
@@ -785,7 +785,7 @@ void TradingDB::currency(offcenter::trading::datatypes::AllCurrency &records)
 	)###";
 
 	try {
-		offcenter::soci::Session session(m_sessionPoolManager);
+		offcenter::common::soci::Session session(m_sessionPoolManager);
 		::soci::rowset<offcenter::trading::datatypes::Currency> rs = (session().prepare << read);
 		for (::soci::rowset<offcenter::trading::datatypes::Currency>::const_iterator it = rs.begin(); it != rs.end(); ++it) {
 			records.records.push_back(*it);
@@ -819,7 +819,7 @@ void TradingDB::candlestickDataFirstRecord(
 	)###";
 
 	unsigned long long tmpRecordTime;
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::into(record_id), ::soci::into(tmpRecordTime), ::soci::use(candlestick_data_series_id, "candlestick_data_series_id"));
 	if (executeStatement(st, SOCIDataExchange::WithDataExchange, SOCITransaction::WithTransaction, &session)) {
 		//LOG(DEBUG) << "After Execute (First): " << record_id << ", " << tmpRecordTime << ", " << candlestick_data_series_id;
@@ -857,7 +857,7 @@ void TradingDB::candlestickDataLastRecord(
 	)###";
 
 	unsigned long long tmpRecordTime;
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (
 			session().prepare << sql,
 			::soci::into(record_id),
@@ -924,12 +924,12 @@ bool TradingDB::executeStatement(
 		::soci::statement& st,
 		SOCIDataExchange withDataExchange,
 		SOCITransaction withTransaction,
-		offcenter::soci::Session* session)
+		offcenter::common::soci::Session* session)
 {
 	try {
 		if (withTransaction == SOCITransaction::WithTransaction) {
 			assert(session != nullptr);
-			offcenter::soci::Transaction transaction(*session);
+			offcenter::common::soci::Transaction transaction(*session);
 			return st.execute(withDataExchange == SOCIDataExchange::WithDataExchange);
 		} else {
 			return st.execute(withDataExchange == SOCIDataExchange::WithDataExchange);

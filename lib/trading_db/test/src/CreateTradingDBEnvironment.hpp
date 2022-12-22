@@ -60,7 +60,7 @@ public:
 
 private:
 	offcenter::trading::db::CreateTradingDB m_createTradingDB;
-	std::shared_ptr<offcenter::soci::MySQLOptions> m_connectionOptions;
+	std::shared_ptr<offcenter::common::soci::MySQLOptions> m_connectionOptions;
 
 };
 

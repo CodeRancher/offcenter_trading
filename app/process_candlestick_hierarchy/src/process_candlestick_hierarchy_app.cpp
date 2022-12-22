@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 		LOG(INFO) << "Process Candlestick Hierarchy!";
 
 		using App = offcenter::common::amqpserver::AmqpServerAppManager<offcenter::trading::processcandlestickhierarchy::ProcessCandlestickHierarchyApp>;
-		std::thread appThread = framework::application::create_basic_app_in_thread<App>(argc, argv);
+		std::thread appThread = offcenter::common::framework::application::create_basic_app_in_thread<App>(argc, argv);
 		appThread.join();
 	} catch (const std::runtime_error& e) {
 		std::cout << "System Error: " << e.what() << std::endl;

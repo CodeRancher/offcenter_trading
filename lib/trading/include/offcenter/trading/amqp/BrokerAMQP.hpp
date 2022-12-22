@@ -39,7 +39,7 @@ inline constexpr char g_broker[] {"add.broker.{broker_id}"};
 class BrokerProducer: public AMQPProducer
 {
 public:
-	explicit BrokerProducer(offcenter::amqp::ConnectionPtr connection, offcenter::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
+	explicit BrokerProducer(offcenter::common::amqp::ConnectionPtr connection, offcenter::common::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
 			AMQPProducer(connection, g_broker, queueParameters)
 	{}
 
@@ -59,7 +59,7 @@ class BrokerConsumer:
 		public AMQPConsumer<offcenter::trading::datatypes::Broker, offcenter::trading::datatypes::Broker::CMSMessageType>
 {
 public:
-	explicit BrokerConsumer(offcenter::amqp::ConnectionPtr connection, CALLBACK callback, offcenter::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
+	explicit BrokerConsumer(offcenter::common::amqp::ConnectionPtr connection, CALLBACK callback, offcenter::common::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
 			AMQPConsumer(connection, g_broker, queueParameters)
 	{}
 

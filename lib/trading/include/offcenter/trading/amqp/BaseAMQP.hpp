@@ -39,7 +39,7 @@ namespace amqp {
 class AMQPCommon
 {
 public:
-	explicit AMQPCommon(const std::string& name, offcenter::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
+	explicit AMQPCommon(const std::string& name, offcenter::common::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
 			m_connectionSettings(name)
 	{}
 
@@ -55,7 +55,7 @@ protected:
 class AMQPProducer : public AMQPCommon
 {
 public:
-	explicit AMQPProducer(offcenter::amqp::ConnectionPtr connection, const std::string& name, offcenter::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
+	explicit AMQPProducer(offcenter::common::amqp::ConnectionPtr connection, const std::string& name, offcenter::common::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
 			AMQPCommon(name, queueParameters),
 			m_sessionProducer(connection, m_connectionSettings)
 	{}
@@ -63,7 +63,7 @@ public:
 	virtual ~AMQPProducer() = default;
 
 protected:
-	offcenter::amqp::SessionProducer m_sessionProducer;
+	offcenter::common::amqp::SessionProducer m_sessionProducer;
 
 };
 
@@ -74,11 +74,11 @@ template <class MESSAGETYPE, class CMSMESSAGETYPE>
 class AMQPConsumer : public AMQPCommon, public cms::MessageListener
 {
 private:
-	using MessageCallback = offcenter::amqp::MessageCallback<CMSMESSAGETYPE, MESSAGETYPE>;
+	using MessageCallback = offcenter::common::amqp::MessageCallback<CMSMESSAGETYPE, MESSAGETYPE>;
 
 public:
 	template <typename TCallback>
-	explicit AMQPConsumer(offcenter::amqp::ConnectionPtr connection, const std::string& name, TCallback&& callback, offcenter::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
+	explicit AMQPConsumer(offcenter::common::amqp::ConnectionPtr connection, const std::string& name, TCallback&& callback, offcenter::common::amqp::ConnectionSettings::QueueParameters queueParameters = {}):
 			AMQPCommon(name, queueParameters),
 			cms::MessageListener(),
 			m_callback(MessageCallback::factory(std::forward<TCallback>(callback))),
@@ -104,7 +104,7 @@ private:
 	}
 
 protected:
-	offcenter::amqp::SessionConsumer m_sessionConsumer;
+	offcenter::common::amqp::SessionConsumer m_sessionConsumer;
 	MessageCallback m_callback;
 
 };

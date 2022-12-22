@@ -24,7 +24,6 @@
 #define AMQPCONSUMERPRODUCEREXAMPLEAPP_H_
 
 #include "offcenter/common/amqpserver/IAmqpServerApp.hpp"
-using namespace offcenter::common;
 
 #include "AmqpExampleProgramOptions.hpp"
 #include "AmqpDataElement.hpp"
@@ -49,7 +48,7 @@ public:
 private:
 	AmqpExampleProgramOptions::ConfigPtr m_amqpOption;
 
-	offcenter::amqp::SessionPtr m_session;
+	offcenter::common::amqp::SessionPtr m_session;
 };
 
 #endif /* AMQPCONSUMERPRODUCEREXAMPLEAPP_H_ */

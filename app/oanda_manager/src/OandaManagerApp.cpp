@@ -56,29 +56,29 @@ OandaManagerApp::~OandaManagerApp()
 	// TODO Auto-generated destructor stub
 }
 
-void OandaManagerApp::onInitProgramOptions(program_options::ProgramOptionsManager &optionsManager)
+void OandaManagerApp::onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager &optionsManager)
 {
 	m_oandaOption = optionsManager.add<OandaManagerProgramOptions>();
 }
 
-void OandaManagerApp::onInitAMQP(offcenter::amqp::ConnectionURIOptions& options)
+void OandaManagerApp::onInitAMQP(offcenter::common::amqp::ConnectionURIOptions& options)
 {
-	offcenter::amqp::URLSchemeHost tcpHost(offcenter::amqp::URLSchemeHost::URLScheme::tcp, m_oandaOption->tcpHost());
+	offcenter::common::amqp::URLSchemeHost tcpHost(offcenter::common::amqp::URLSchemeHost::URLScheme::tcp, m_oandaOption->tcpHost());
 	options.protocol.setTCPProtocol(tcpHost);
 	options.connection.sendTimeout = m_oandaOption->connectionSendTimeout();
 	options.failoverTransport.timeout = m_oandaOption->failoverTransportTimeout();
 	LOG(INFO) << "AMQP URI: " << options.uri();
 }
 
-void OandaManagerApp::onInitAMQPSessions(offcenter::amqp::ConnectionPtr connection)
+void OandaManagerApp::onInitAMQPSessions(offcenter::common::amqp::ConnectionPtr connection)
 {
 	m_connection = connection;
 
 	// Create a Session
-	//m_session = offcenter::amqp::helper::sessionFactory(connection->createSession(cms::Session::AUTO_ACKNOWLEDGE));
+	//m_session = offcenter::common::amqp::helper::sessionFactory(connection->createSession(cms::Session::AUTO_ACKNOWLEDGE));
 
 	// Create the destination (Topic or Queue)
-	//m_destination = offcenter::amqp::helper::destinationFactory(m_session->createTopic("offcenter.test.input"));
+	//m_destination = offcenter::common::amqp::helper::destinationFactory(m_session->createTopic("offcenter.test.input"));
 }
 
 

@@ -41,14 +41,14 @@ namespace amqp {
  * Process the Current Candle Range
  */
 class ProcessCurrentCandleRange:
-		public offcenter::amqp::threading::ProcessAmqpMessageThread<
+		public offcenter::common::amqp::threading::ProcessAmqpMessageThread<
 			offcenter::trading::datatypes::CandlestickTimeRangeAmqp,
 			offcenter::trading::datatypes::CandlestickTimeRangeAmqp::MessageType>
 {
 public:
 	ProcessCurrentCandleRange() = delete;
 	explicit ProcessCurrentCandleRange(
-			offcenter::amqp::SessionPtr session,
+			offcenter::common::amqp::SessionPtr session,
 			offcenter::trading::oandapersistenceclient::OandaPersistenceEndpoints& persistenceEndpoints,
 			const std::string& broker,
 			const std::string& server,
@@ -70,8 +70,8 @@ private:
 	std::string m_inputTopic;
 	std::string m_processInstrumentGranularityTopic;
 	offcenter::common::UTCDateTime m_currentTime;
-	offcenter::amqp::DestinationPtr m_processInstrumentGranularityDestination;
-	offcenter::amqp::ProducerMessageHandler m_processInstrumentGranularityProducer;
+	offcenter::common::amqp::DestinationPtr m_processInstrumentGranularityDestination;
+	offcenter::common::amqp::ProducerMessageHandler m_processInstrumentGranularityProducer;
 	offcenter::trading::oandapersistenceclient::OandaPersistenceEndpoints& m_persistenceEndpoints;
 
 };

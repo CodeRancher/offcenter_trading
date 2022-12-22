@@ -28,7 +28,6 @@
 #include "offcenter/common/framework/application/BasicAppConfig.hpp"
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
 #include "offcenter/common/threading/RunningThreadArray.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/common/soci/MySQLProgramOptions.hpp"
 #include "offcenter/common/soci/Session.hpp"
@@ -50,12 +49,12 @@ namespace persistoandacandledata {
 /**
  *
  */
-class PersistOandaCandleDataApp: public framework::application::IBasicApp {
+class PersistOandaCandleDataApp: public offcenter::common::framework::application::IBasicApp {
 public:
 	PersistOandaCandleDataApp();
 	virtual ~PersistOandaCandleDataApp();
 
-	void onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager) override;
+	void onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager) override;
 	void onSetUp() override;
 	void onExecute() override;
 	void onTearDown() override;
@@ -72,7 +71,7 @@ private:
 
 private:
 	std::string m_oandaSource;
-	offcenter::soci::MySQLProgramOptions::ConfigPtr m_mysqlConfig;
+	offcenter::common::soci::MySQLProgramOptions::ConfigPtr m_mysqlConfig;
 	offcenter::trading::persistoandacandledata::PersistOandaCandleDataProgramOptions::ConfigPtr m_programConfig;
 	offcenter::trading::oandapersistenceclient::PersistenceManagerProgramOptions::ConfigPtr m_persistenceManagerConfig;
 

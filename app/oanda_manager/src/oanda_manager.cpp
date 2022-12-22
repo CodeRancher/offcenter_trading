@@ -29,7 +29,6 @@ INITIALIZE_EASYLOGGINGPP
 #include "offcenter/common/amqpserver/AmqpServerAppManager.hpp"
 #include "offcenter/common/framework/application/BasicAppConfig.hpp"
 #include "offcenter/common/framework/application/Utility.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/trading/oandamanager/OandaManagerApp.hpp"
 using namespace offcenter::trading;
@@ -49,8 +48,8 @@ int main(int argc, char **argv)
 		LOG(INFO) << "--------------------------------------------------------------------------------";
 		LOG(INFO) << "Begin Oanda Manager App!";
 
-		using App = amqpserver::AmqpServerAppManager<oandamanager::OandaManagerApp>;
-		std::thread appThread = framework::application::create_basic_app_in_thread<App>(argc, argv);
+		using App = offcenter::common::amqpserver::AmqpServerAppManager<oandamanager::OandaManagerApp>;
+		std::thread appThread = offcenter::common::framework::application::create_basic_app_in_thread<App>(argc, argv);
 		appThread.join();
 	} catch (const std::runtime_error& e) {
 		std::cout << "System Error: " << e.what() << std::endl;

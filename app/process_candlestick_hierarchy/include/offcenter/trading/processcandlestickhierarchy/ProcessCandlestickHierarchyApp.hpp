@@ -45,10 +45,10 @@ public:
 	explicit ProcessCandlestickHierarchyApp();
 	virtual ~ProcessCandlestickHierarchyApp();
 
-	void onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager) override;
+	void onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager) override;
 	void onSetUp() override;
-	void onInitAMQP(offcenter::amqp::ConnectionURIOptions& options) override;
-	void onInitAMQPSessions(offcenter::amqp::ConnectionPtr connection) override;
+	void onInitAMQP(offcenter::common::amqp::ConnectionURIOptions& options) override;
+	void onInitAMQPSessions(offcenter::common::amqp::ConnectionPtr connection) override;
 	void onExecute() override;
 	void onTearDown() override;
 	void onHelp(const std::string& help) override;
@@ -64,7 +64,7 @@ private:
 	offcenter::trading::processcandlestickhierarchy::ProcessCandlestickHierarchyProgramOptions::ConfigPtr m_options;
 	//offcenter::trading::oandapersistenceclient::PersistenceManagerProgramOptions::ConfigPtr m_persistenceManagerConfig;
 
-	offcenter::amqp::SessionPtr m_session;
+	offcenter::common::amqp::SessionPtr m_session;
 	offcenter::common::threading::RunningThreadArray<offcenter::trading::amqp::BuildHigherTimeframeCandle> m_threads;
 	//offcenter::trading::oandapersistenceclient::OandaPersistenceEndpoints m_persistenceEndpoints;
 

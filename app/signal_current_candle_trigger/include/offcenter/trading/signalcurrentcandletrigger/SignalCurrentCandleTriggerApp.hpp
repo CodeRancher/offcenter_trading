@@ -41,10 +41,10 @@ public:
 	explicit SignalCurrentCandleTriggerApp();
 	virtual ~SignalCurrentCandleTriggerApp();
 
-	void onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager) override;
+	void onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager) override;
 	void onSetUp() override;
-	void onInitAMQP(offcenter::amqp::ConnectionURIOptions& options) override;
-	void onInitAMQPSessions(offcenter::amqp::ConnectionPtr connection) override;
+	void onInitAMQP(offcenter::common::amqp::ConnectionURIOptions& options) override;
+	void onInitAMQPSessions(offcenter::common::amqp::ConnectionPtr connection) override;
 	void onExecute() override;
 	void onTearDown() override;
 	void onHelp(const std::string& help) override;
@@ -59,7 +59,7 @@ private:
 	offcenter::common::amqpserver::AmqpConnectionProgramOptions::ConfigPtr m_amqpServerOptions;
 	offcenter::trading::signalcurrentcandletrigger::SignalCurrentCandleTriggerProgramOptions::ConfigPtr m_options;
 
-	offcenter::amqp::SessionPtr m_session;
+	offcenter::common::amqp::SessionPtr m_session;
 };
 
 } /* namespace signalcurrentcandletrigger */

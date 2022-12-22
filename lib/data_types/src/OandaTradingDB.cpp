@@ -38,7 +38,7 @@ OandaTradingDB::~OandaTradingDB()
 	// TODO Auto-generated destructor stub
 }
 
-void OandaTradingDB::initialize(const offcenter::soci::MySQLOptions &options)
+void OandaTradingDB::initialize(const offcenter::common::soci::MySQLOptions &options)
 {
 	TradingDB::initialize(options);
 }

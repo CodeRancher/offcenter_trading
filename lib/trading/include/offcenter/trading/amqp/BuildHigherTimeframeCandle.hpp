@@ -34,14 +34,14 @@ namespace amqp {
  *
  */
 class BuildHigherTimeframeCandle:
-		public offcenter::amqp::threading::ProcessAmqpMessageThread<
+		public offcenter::common::amqp::threading::ProcessAmqpMessageThread<
 			offcenter::trading::datatypes::CandlestickDataAmqp,
 			offcenter::trading::datatypes::CandlestickDataAmqp::MessageType>
 {
 public:
 	BuildHigherTimeframeCandle() = delete;
 	explicit BuildHigherTimeframeCandle(
-			offcenter::amqp::SessionPtr session,
+			offcenter::common::amqp::SessionPtr session,
 			const std::string& broker,
 			const std::string& server,
 			const std::string& instrument,

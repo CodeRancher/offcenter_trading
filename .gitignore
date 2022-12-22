@@ -38,3 +38,4 @@ Debug
 *.exe
 *.out
 *.app
+/_build/

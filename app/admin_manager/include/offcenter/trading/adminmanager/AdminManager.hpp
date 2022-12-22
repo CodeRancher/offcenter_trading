@@ -24,7 +24,6 @@
 #define OFFCENTER_TRADING_ADMINMANAGER_ADMINMANAGER_HPP_
 
 #include "offcenter/common/amqpserver/IAmqpServerApp.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/trading/adminmanager/AdminManagerProgramOptions.hpp"
 
@@ -35,15 +34,15 @@ namespace adminmanager {
 /**
  *
  */
-class AdminManager: public amqpserver::IAmqpServerApp {
+class AdminManager: public offcenter::common::amqpserver::IAmqpServerApp {
 public:
 	explicit AdminManager();
 	virtual ~AdminManager();
 
-	void onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager) override;
+	void onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager) override;
 	void onSetUp() override;
-	void onInitAMQP(amqp::ConnectionURIOptions& options) override;
-	void onInitAMQPSessions(amqp::ConnectionPtr connection) override;
+	void onInitAMQP(offcenter::common::amqp::ConnectionURIOptions& options) override;
+	void onInitAMQPSessions(offcenter::common::amqp::ConnectionPtr connection) override;
 	void onExecute() override;
 	void onTearDown() override;
 	void onHelp(const std::string& help) override;
@@ -52,7 +51,7 @@ public:
 private:
 	AdminManagerProgramOptions::ConfigPtr m_amqpOption;
 
-	offcenter::amqp::SessionPtr m_session;
+	offcenter::common::amqp::SessionPtr m_session;
 };
 
 } /* namespace adminmanager */

@@ -44,7 +44,7 @@ public:
 	TradingDB();
 	virtual ~TradingDB();
 
-	virtual void initialize(const offcenter::soci::MySQLOptions& options);
+	virtual void initialize(const offcenter::common::soci::MySQLOptions& options);
 
 	void instrumentCreate(const offcenter::trading::datatypes::Instrument& instrument);
 	void instrumentRead(offcenter::trading::datatypes::Instrument& instrument, const std::string& name);
@@ -105,10 +105,10 @@ private:
 		WithoutTransaction
 	};
 
-	bool executeStatement(::soci::statement& st, SOCIDataExchange withDataExchange, SOCITransaction withTransaction, offcenter::soci::Session* session = nullptr);
+	bool executeStatement(::soci::statement& st, SOCIDataExchange withDataExchange, SOCITransaction withTransaction, offcenter::common::soci::Session* session = nullptr);
 
 private:
-	offcenter::soci::SessionPoolManager m_sessionPoolManager;
+	offcenter::common::soci::SessionPoolManager m_sessionPoolManager;
 };
 
 } /* namespace db */

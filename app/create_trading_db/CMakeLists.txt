@@ -23,7 +23,9 @@
 offcenter_cxx()
 offcenter_elpp()
 
-offcenter_exe_constants(create_trading_db)
+###############################################################################
+# Create mysql trading db
+offcenter_exe_constants(create_trading_db_mysql)
 
 add_executable (${EXE_NAME}
     ${CMAKE_CURRENT_LIST_DIR}/src/create_trading_db.cpp
@@ -49,14 +51,38 @@ Offcenter::offcenter_common_framework
 target_include_directories(${EXE_NAME}
 	BEFORE PUBLIC
 		${CMAKE_CURRENT_LIST_DIR}/include
-		#${CMAKE_CURRENT_LIST_DIR}/../include
-		#${CMAKE_CURRENT_LIST_DIR}/../../framework/include
-		#${CMAKE_CURRENT_LIST_DIR}/../../program_options/include
-		#${CMAKE_CURRENT_LIST_DIR}/../../common/include
-	# SYSTEM
-	# 	${EASYLOGGINGPP_INCLUDE_DIR}
-	# 	${MariaDBClient_INCLUDE_DIRS}
-		#${SOCI_INCLUDE_DIR}/..
+)
+
+offcenter_exe_install()
+
+###############################################################################
+# Create postgres trading db
+offcenter_exe_constants(create_trading_db_postgres)
+
+add_executable (${EXE_NAME}
+    ${CMAKE_CURRENT_LIST_DIR}/src/create_trading_db.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/CreateTradingDBApp.cpp
+)
+
+target_link_libraries(${EXE_NAME}
+Offcenter::offcenter_common_framework
+	Offcenter::offcenter_common
+	Offcenter::offcenter_common_program_options
+	Offcenter::offcenter_common_soci
+	offcenter_trading_db
+	Boost::program_options
+	${EASYLOGGINGPP_LIBRARY}
+	${SOCI_mysql_PLUGIN}
+	${SOCI_LIBRARY}
+	MariaDBClient::MariaDBClient
+	${CMAKE_DL_LIBS}
+	Threads::Threads
+	OpenSSL::Crypto
+)
+
+target_include_directories(${EXE_NAME}
+	BEFORE PUBLIC
+		${CMAKE_CURRENT_LIST_DIR}/include
 )
 
 offcenter_exe_install()

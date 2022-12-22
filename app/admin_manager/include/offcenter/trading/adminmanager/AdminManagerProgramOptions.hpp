@@ -27,7 +27,6 @@
 #include <boost/bind/bind.hpp>
 
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/trading/adminmanager/AdminManagerOptions.hpp"
 
@@ -37,7 +36,7 @@ namespace adminmanager {
 
 
 class AdminManagerProgramOptions:
-		public program_options::ProgramOptionsGroup<AdminManagerOptions>
+		public offcenter::common::program_options::ProgramOptionsGroup<AdminManagerOptions>
 {
 public:
 	AdminManagerProgramOptions():

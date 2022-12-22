@@ -28,7 +28,6 @@
 #include <boost/bind/bind.hpp>
 
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/trading/oandamanager/OandaManagerOptions.hpp"
 
@@ -37,7 +36,7 @@ namespace trading {
 namespace oandamanager {
 
 class OandaManagerProgramOptions:
-		public program_options::ProgramOptionsGroup<OandaManagerOptions>
+		public offcenter::common::program_options::ProgramOptionsGroup<OandaManagerOptions>
 {
 public:
 	OandaManagerProgramOptions():

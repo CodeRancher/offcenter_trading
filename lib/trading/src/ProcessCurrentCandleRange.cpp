@@ -33,7 +33,7 @@ namespace trading {
 namespace amqp {
 
 ProcessCurrentCandleRange::ProcessCurrentCandleRange(
-		offcenter::amqp::SessionPtr session,
+		offcenter::common::amqp::SessionPtr session,
 		offcenter::trading::oandapersistenceclient::OandaPersistenceEndpoints& persistenceEndpoints,
 		const std::string& broker,
 		const std::string& server,
@@ -43,7 +43,7 @@ ProcessCurrentCandleRange::ProcessCurrentCandleRange(
 		ProcessAmqpMessageThread(session, offcenter::trading::amqp::topic::signalCandleRange(broker, server, instrument, granularity)),
 		m_inputTopic(offcenter::trading::amqp::topic::signalCandleRange(broker, server, instrument, granularity)),
 		m_processInstrumentGranularityTopic(offcenter::trading::amqp::topic::processInstrumentGranularity(broker, server, instrument, granularity)),
-		m_processInstrumentGranularityDestination(offcenter::amqp::helper::destinationFactory(session->createQueue(m_processInstrumentGranularityTopic))),
+		m_processInstrumentGranularityDestination(offcenter::common::amqp::helper::destinationFactory(session->createQueue(m_processInstrumentGranularityTopic))),
 		m_processInstrumentGranularityProducer(session, m_processInstrumentGranularityDestination),
 		m_persistenceEndpoints(persistenceEndpoints)
 {

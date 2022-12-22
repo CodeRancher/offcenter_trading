@@ -30,14 +30,13 @@
 
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
 #include "offcenter/trading/persistoandacandledata/PersistOandaCandleDataOptions.hpp"
-using namespace offcenter::common;
 
 namespace offcenter {
 namespace trading {
 namespace persistoandacandledata {
 
 class PersistOandaCandleDataProgramOptions:
-		public program_options::ProgramOptionsGroup<offcenter::trading::persistoandacandledata::PersistOandaCandleDataOptions>
+		public offcenter::common::program_options::ProgramOptionsGroup<offcenter::trading::persistoandacandledata::PersistOandaCandleDataOptions>
 {
 public:
 	PersistOandaCandleDataProgramOptions():

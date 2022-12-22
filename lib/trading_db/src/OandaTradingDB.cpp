@@ -44,7 +44,7 @@ OandaTradingDB::~OandaTradingDB()
 	// TODO Auto-generated destructor stub
 }
 
-void OandaTradingDB::initialize(const offcenter::soci::MySQLOptions &options)
+void OandaTradingDB::initialize(const offcenter::common::soci::MySQLOptions &options)
 {
 	m_sessionPoolManager.open(options);
 }
@@ -103,7 +103,7 @@ void OandaTradingDB::instrumentCreate(const offcenter::trading::datatypes::oanda
 	);
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::transaction transInstrument(session());
 	::soci::statement st = (session().prepare << insert, ::soci::use(instrument));
 	st.execute(true);
@@ -125,7 +125,7 @@ void OandaTradingDB::instrumentRead(
 		SELECT * FROM v_oanda_instrument WHERE name = :name;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << read, ::soci::into(instrument), ::soci::use(name));
 	st.execute(true);
 	//st.fetch();
@@ -139,7 +139,7 @@ void OandaTradingDB::instrumentRead(
 		SELECT * FROM v_oanda_instrument WHERE instrument_id = :instrument_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << read, ::soci::into(instrument), ::soci::use(instrument_id));
 	st.execute(true);
 	//st.fetch();
@@ -177,7 +177,7 @@ void OandaTradingDB::instrumentUpdate(
 		instrument_id = :instrument_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::transaction transInstrument(session());
 	::soci::statement st = (session().prepare << sql, ::soci::use(instrument));
 	st.execute(true);
@@ -196,7 +196,7 @@ void OandaTradingDB::instrumentDelete(const std::string name)
 		DELETE FROM oanda_instrument WHERE name = :name;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::use(name));
 	st.execute();
 }
@@ -210,7 +210,7 @@ void OandaTradingDB::instrumentDelete(unsigned instrument_id)
 		DELETE FROM oanda_instrument WHERE instrument_id = :instrument_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << sql, ::soci::use(instrument_id));
 	st.execute();
 }
@@ -248,7 +248,7 @@ void OandaTradingDB::financingDayOfWeekCreate(
 	if (instrument_id > 0) {
 		tmpFinancingDayOfWeek.instrument_id = instrument_id;
 	}
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	::soci::statement st = (session().prepare << insert, ::soci::use(tmpFinancingDayOfWeek));
 	st.execute(true);
 }
@@ -280,7 +280,7 @@ void OandaTradingDB::financingDayOfWeekUpdate(
 		WHERE instrument_id = :instrument_id;
 	)###";
 
-	offcenter::soci::Session session(m_sessionPoolManager);
+	offcenter::common::soci::Session session(m_sessionPoolManager);
 	std::vector<unsigned> financingDayOfWeekIDs;
 	::soci::statement st = (session().prepare << sql, ::soci::into(financingDayOfWeekIDs), ::soci::use(instrument_id));
 	st.execute(true);

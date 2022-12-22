@@ -31,11 +31,16 @@ INITIALIZE_EASYLOGGINGPP
 #include "offcenter/common/framework/application/AppManager.hpp"
 #include "offcenter/common/framework/application/BasicAppConfig.hpp"
 #include "offcenter/common/framework/application/Utility.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/trading/createtradingdb/CreateTradingDBApp.hpp"
 using namespace offcenter::trading;
 
+/**
+ * Main method
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char **argv)
 {
 	try {
@@ -51,8 +56,8 @@ int main(int argc, char **argv)
 		LOG(INFO) << "--------------------------------------------------------------------------------";
 		LOG(INFO) << "Create Trading DB";
 
-		using App = framework::application::AppManager<createtradingdb::CreateTradingDBApp>;
-		std::thread appThread = framework::application::create_basic_app_in_thread<App>(argc, argv);
+		using App = offcenter::common::framework::application::AppManager<createtradingdb::CreateTradingDBApp>;
+		std::thread appThread = offcenter::common::framework::application::create_basic_app_in_thread<App>(argc, argv);
 		appThread.join();
 	} catch (const std::runtime_error& e) {
 		std::cout << "System Error: " << e.what() << std::endl;

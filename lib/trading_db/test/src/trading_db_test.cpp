@@ -31,7 +31,7 @@
 TEST (TradingDBTest, Instrument)
 {
 	// Connect to the database
-	std::shared_ptr<offcenter::soci::MySQLOptions> connectionOptions = getConnectionOptions();
+	std::shared_ptr<offcenter::common::soci::MySQLOptions> connectionOptions = getConnectionOptions();
 	offcenter::trading::db::TradingDB tradingDB;
 	tradingDB.initialize(*connectionOptions);
 
@@ -65,7 +65,7 @@ TEST (TradingDBTest, Instrument)
 TEST (TradingDBTest, CandlestickFirstLastRecord)
 {
 	// Connect to the database
-	std::shared_ptr<offcenter::soci::MySQLOptions> connectionOptions = getConnectionOptions();
+	std::shared_ptr<offcenter::common::soci::MySQLOptions> connectionOptions = getConnectionOptions();
 	offcenter::trading::db::TradingDB tradingDB;
 	tradingDB.initialize(*connectionOptions);
 

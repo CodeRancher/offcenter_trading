@@ -57,9 +57,9 @@ PersistOandaCandleDataApp::~PersistOandaCandleDataApp() {
 	// TODO Auto-generated destructor stub
 }
 
-void PersistOandaCandleDataApp::onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager)
+void PersistOandaCandleDataApp::onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager)
 {
-	m_mysqlConfig = optionsManager.add<offcenter::soci::MySQLProgramOptions>();
+	m_mysqlConfig = optionsManager.add<offcenter::common::soci::MySQLProgramOptions>();
 	m_programConfig = optionsManager.add<offcenter::trading::persistoandacandledata::PersistOandaCandleDataProgramOptions>();
 	m_persistenceManagerConfig = optionsManager.add<offcenter::trading::oandapersistenceclient::PersistenceManagerProgramOptions>();
 }

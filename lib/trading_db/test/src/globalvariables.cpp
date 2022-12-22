@@ -32,9 +32,9 @@ std::string g_host;
 /**
  * Create a MySQLOptions with the above connection options
  */
-std::shared_ptr<offcenter::soci::MySQLOptions> getConnectionOptions()
+std::shared_ptr<offcenter::common::soci::MySQLOptions> getConnectionOptions()
 {
-	static std::shared_ptr<offcenter::soci::MySQLOptions> connectionOptions = std::make_shared<offcenter::soci::MySQLOptions>(g_host, g_dbname, g_user, g_password);
+	static std::shared_ptr<offcenter::common::soci::MySQLOptions> connectionOptions = std::make_shared<offcenter::common::soci::MySQLOptions>(g_host, g_dbname, g_user, g_password);
 
 	return connectionOptions;
 }

@@ -31,7 +31,7 @@
 
 
 class GenerateSineCandlesticksExampleProgramOptions:
-		public program_options::ProgramOptionsGroup<GenerateSineCandlesticksExampleOptions>
+		public offcenter::common::program_options::ProgramOptionsGroup<GenerateSineCandlesticksExampleOptions>
 {
 public:
 	GenerateSineCandlesticksExampleProgramOptions():

@@ -29,7 +29,6 @@
 #include "offcenter/common/restserver/IRestServerApp.hpp"
 #include "offcenter/common/restserver/RestServerProgramOptions.hpp"
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/common/soci/MySQLProgramOptions.hpp"
 #include "offcenter/common/soci/Session.hpp"
@@ -47,7 +46,7 @@ namespace oandapersistencemanager {
 /**
  *
  */
-class OandaPersistenceManagerApp: public restserver::IRestServerApp
+class OandaPersistenceManagerApp: public offcenter::common::restserver::IRestServerApp
 {
 public:
 	enum class Handlers {
@@ -73,9 +72,9 @@ public:
 	explicit OandaPersistenceManagerApp();
 	virtual ~OandaPersistenceManagerApp();
 
-	void onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager) override;
+	void onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager) override;
 	void onSetUp() override;
-	void onInitMethodHandlers(restserver::AutoMethodHandler& methodHandler) override;
+	void onInitMethodHandlers(offcenter::common::restserver::AutoMethodHandler& methodHandler) override;
 	void onInitEndpoint(web::uri& uri) override;
 	//virtual void onExecute() = 0; override;
 	void onTearDown() override;
@@ -148,7 +147,7 @@ private:
 	std::string getURL(Handlers handler);
 
 private:
-	offcenter::soci::MySQLProgramOptions::ConfigPtr m_mysqlConfig;
+	offcenter::common::soci::MySQLProgramOptions::ConfigPtr m_mysqlConfig;
 	offcenter::trading::oandapersistencemanager::OandaPersistenceManagerProgramOptions::ConfigPtr m_oandaPersistenceManagerConfig;
 	offcenter::common::restserver::RestServerProgramOptions::ConfigPtr m_restServerConfig;
 	offcenter::trading::db::oanda::OandaTradingDB m_oandaTradingDB;

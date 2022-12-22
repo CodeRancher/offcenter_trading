@@ -27,7 +27,6 @@
 #include <boost/bind/bind.hpp>
 
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/trading/persistoandaforexdatatocsv/PersistOandaForexDataToCSVOptions.hpp"
 
@@ -36,7 +35,7 @@ namespace trading {
 namespace persistoandaforexdatatocsv {
 
 class PersistOandaForexDataToCSVProgramOptions:
-		public program_options::ProgramOptionsGroup<PersistOandaForexDataToCSVOptions>
+		public offcenter::common::program_options::ProgramOptionsGroup<PersistOandaForexDataToCSVOptions>
 {
 public:
 	PersistOandaForexDataToCSVProgramOptions():

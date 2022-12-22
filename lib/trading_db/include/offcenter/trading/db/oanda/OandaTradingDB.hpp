@@ -47,7 +47,7 @@ public:
 	OandaTradingDB();
 	virtual ~OandaTradingDB();
 
-	void initialize(const offcenter::soci::MySQLOptions &options);
+	void initialize(const offcenter::common::soci::MySQLOptions &options);
 
 	void instrumentCreate(const offcenter::trading::datatypes::oanda::InstrumentWithIDs& instrument);
 	void instrumentRead(offcenter::trading::datatypes::oanda::Instrument& instrument, const std::string name);
@@ -65,7 +65,7 @@ public:
 	void financingDayOfWeekUpdate(const std::vector<offcenter::trading::datatypes::oanda::FinancingDayOfWeek>& financingDayOfWeek, unsigned int instrument_id);
 
 private:
-	offcenter::soci::SessionPoolManager m_sessionPoolManager;
+	offcenter::common::soci::SessionPoolManager m_sessionPoolManager;
 };
 
 } /* namespace oanda */

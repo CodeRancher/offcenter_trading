@@ -24,7 +24,6 @@
 #define AMQPPRODUCEREXAMPLEAPP_H_
 
 #include "offcenter/common/amqpserver/IAmqpServerApp.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/common/amqp/ProducerMessageProducer.hpp"
 
@@ -52,10 +51,10 @@ public:
 private:
 	AmqpExampleProgramOptions::ConfigPtr m_amqpOption;
 
-	offcenter::amqp::SessionPtr m_session;
-	offcenter::amqp::DestinationPtr m_destination;
-	//offcenter::amqp::MessageProducerPtr m_producer;
-	//offcenter::amqp::ProducerMessageHandler m_producer;
+	offcenter::common::amqp::SessionPtr m_session;
+	offcenter::common::amqp::DestinationPtr m_destination;
+	//offcenter::common::amqp::MessageProducerPtr m_producer;
+	//offcenter::common::amqp::ProducerMessageHandler m_producer;
 };
 
 #endif /* AMQPPRODUCEREXAMPLEAPP_H_ */

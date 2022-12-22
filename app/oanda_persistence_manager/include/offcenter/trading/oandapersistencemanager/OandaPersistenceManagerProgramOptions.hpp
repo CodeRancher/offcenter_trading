@@ -29,14 +29,13 @@
 
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
 #include "offcenter/trading/oandapersistencemanager/OandaPersistenceManagerOptions.hpp"
-using namespace offcenter::common;
 
 namespace offcenter {
 namespace trading {
 namespace oandapersistencemanager {
 
 class OandaPersistenceManagerProgramOptions:
-		public program_options::ProgramOptionsGroup<offcenter::trading::oandapersistencemanager::OandaPersistenceManagerOptions>
+		public offcenter::common::program_options::ProgramOptionsGroup<offcenter::trading::oandapersistencemanager::OandaPersistenceManagerOptions>
 {
 public:
 	OandaPersistenceManagerProgramOptions():

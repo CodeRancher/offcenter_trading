@@ -26,7 +26,6 @@
 #include "oanda/v20/endpoint/OandaEndpoints.hpp"
 
 #include "offcenter/common/amqpserver/IAmqpServerApp.hpp"
-using namespace offcenter::common;
 
 #include "offcenter/common/amqp/ProducerMessageProducer.hpp"
 
@@ -39,15 +38,15 @@ namespace oandamanager {
 /**
  *
  */
-class OandaManagerApp: public amqpserver::IAmqpServerApp {
+class OandaManagerApp: public offcenter::common::amqpserver::IAmqpServerApp {
 public:
 	explicit OandaManagerApp();
 	virtual ~OandaManagerApp();
 
-	void onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager) override;
+	void onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager) override;
 	void onSetUp() override;
-	void onInitAMQP(offcenter::amqp::ConnectionURIOptions& options) override;
-	void onInitAMQPSessions(offcenter::amqp::ConnectionPtr connection) override;
+	void onInitAMQP(offcenter::common::amqp::ConnectionURIOptions& options) override;
+	void onInitAMQPSessions(offcenter::common::amqp::ConnectionPtr connection) override;
 	//void onInitMethodHandlers(restserver::AutoMethodHandler& methodHandler) override;
 	//void onInitEndpoint(web::uri& uri) override;
 	void onExecute() override;
@@ -65,14 +64,14 @@ private:
 	OandaManagerProgramOptions::ConfigPtr m_oandaOption;
 
 	::oanda::v20::endpoint::OandaEndpoints::Ptr m_oandaEndpoints;
-	amqp::ConnectionPtr m_connection;
+	offcenter::common::amqp::ConnectionPtr m_connection;
 
-	//offcenter::amqp::SessionPtr m_session;
-	//offcenter::amqp::DestinationPtr m_destination;
+	//offcenter::common::amqp::SessionPtr m_session;
+	//offcenter::common::amqp::DestinationPtr m_destination;
 
 
-	//offcenter::amqp::MessageProducerPtr m_producer;
-	//offcenter::amqp::ProducerMessageHandler m_producer;
+	//offcenter::common::amqp::MessageProducerPtr m_producer;
+	//offcenter::common::amqp::ProducerMessageHandler m_producer;
 };
 
 } /* namespace oandamanager */

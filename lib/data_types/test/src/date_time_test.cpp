@@ -29,8 +29,7 @@
 template<typename DateTime>
 void testDateTimeConversion(const std::string& scope)
 {
-	using namespace offcenter::common;
-	using namespace offcenter::trading::datatypes;
+		using namespace offcenter::trading::datatypes;
 	using namespace std::chrono;
 
 	SCOPED_TRACE(scope);
@@ -72,8 +71,7 @@ TEST (DateTime, DateTimeConversion)
 
 TEST (DateTime, S5)
 {
-	using namespace offcenter::common;
-	using namespace offcenter::trading::datatypes;
+		using namespace offcenter::trading::datatypes;
 	using namespace std::chrono;
 	using TF = ForexDateTime_S5;
 
@@ -87,8 +85,7 @@ TEST (DateTime, S5)
 
 TEST (DateTime, M1)
 {
-	using namespace offcenter::common;
-	using namespace offcenter::trading::datatypes;
+		using namespace offcenter::trading::datatypes;
 	using namespace std::chrono;
 
 	ForexDateTime_M1 start = make_CustomDateTimeFromISO8601<ForexDateTime_M1>("2000-01-01T00:00:00.000000000Z");
@@ -101,8 +98,7 @@ TEST (DateTime, M1)
 
 TEST (DateTime, H8)
 {
-	using namespace offcenter::common;
-	using namespace offcenter::trading::datatypes;
+		using namespace offcenter::trading::datatypes;
 	using namespace std::chrono;
 
 	EXPECT_EQ(make_CustomDateTimeFromISO8601<ForexDateTime_H8>("2000-01-01T00:00:00.000000000Z"), make_UTCDateTimeFromISO8601("2000-01-01T00:00:00.000000000Z"));
@@ -116,8 +112,7 @@ TEST (DateTime, H8)
 
 TEST (DateTime, W)
 {
-	using namespace offcenter::common;
-	using namespace offcenter::trading::datatypes;
+		using namespace offcenter::trading::datatypes;
 	using namespace std::chrono;
 
 	LOG(INFO) << CustomDateTimeToISO8601(make_CustomDateTimeFromISO8601<ForexDateTime_W>("2000-01-01T00:00:00.000000000Z"));
@@ -143,8 +138,7 @@ TEST (DateTime, W)
 }
 
 TEST (DateTime, Weekly) {
-	using namespace offcenter::common;
-	using namespace offcenter::trading::datatypes;
+		using namespace offcenter::trading::datatypes;
 	using namespace std::chrono;
 
 	ForexDateTime_W dt = make_CustomDateTimeFromISO8601<ForexDateTime_W>("2000-01-01T10:00:00Z");

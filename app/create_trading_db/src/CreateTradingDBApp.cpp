@@ -48,9 +48,9 @@ CreateTradingDBApp::~CreateTradingDBApp() {
 	// TODO Auto-generated destructor stub
 }
 
-void CreateTradingDBApp::onInitProgramOptions(program_options::ProgramOptionsManager& optionsManager)
+void CreateTradingDBApp::onInitProgramOptions(offcenter::common::program_options::ProgramOptionsManager& optionsManager)
 {
-	m_mysqlConfig = optionsManager.add<offcenter::soci::MySQLProgramOptions>();
+	m_mysqlConfig = optionsManager.add<offcenter::common::soci::MySQLProgramOptions>();
 	m_createTradingDBConfig = optionsManager.add<offcenter::trading::createtradingdb::CreateTradingDBProgramOptions>();
 }
 

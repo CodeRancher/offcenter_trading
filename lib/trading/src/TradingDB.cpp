@@ -37,7 +37,7 @@ TradingDB::~TradingDB()
 	// TODO Auto-generated destructor stub
 }
 
-void TradingDB::initialize(const offcenter::soci::MySQLOptions &options)
+void TradingDB::initialize(const offcenter::common::soci::MySQLOptions &options)
 {
 	m_session.open(options);
 }

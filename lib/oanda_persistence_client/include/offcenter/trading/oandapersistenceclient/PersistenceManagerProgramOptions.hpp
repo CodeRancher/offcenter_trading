@@ -25,7 +25,6 @@
 
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
 #include "offcenter/trading/oandapersistenceclient/PersistenceManagerOptions.hpp"
-using namespace offcenter::common;
 
 namespace offcenter {
 namespace trading {
@@ -35,7 +34,7 @@ namespace oandapersistenceclient {
  *
  */
 class PersistenceManagerProgramOptions:
-		public program_options::ProgramOptionsGroup<offcenter::trading::oandapersistenceclient::PersistenceManagerOptions>
+		public offcenter::common::program_options::ProgramOptionsGroup<offcenter::trading::oandapersistenceclient::PersistenceManagerOptions>
 {
 public:
 	PersistenceManagerProgramOptions():

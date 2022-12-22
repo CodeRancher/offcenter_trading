@@ -28,14 +28,13 @@
 
 #include "offcenter/common/program_options/ProgramOptionsGroup.hpp"
 #include "offcenter/trading/createtradingdb/CreateTradingDBOptions.hpp"
-using namespace offcenter::common;
 
 namespace offcenter {
 namespace trading {
 namespace createtradingdb {
 
 class CreateTradingDBProgramOptions:
-		public program_options::ProgramOptionsGroup<offcenter::trading::createtradingdb::CreateTradingDBOptions>
+		public offcenter::common::program_options::ProgramOptionsGroup<offcenter::trading::createtradingdb::CreateTradingDBOptions>
 {
 public:
 	CreateTradingDBProgramOptions():
